@@ -5,29 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Homepage</title>
   <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #eee;
+      --accent-color: #0066cc;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 2rem;
-      background: #fafafa;
-      color: #333;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      position: relative;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
     }
+
     footer {
       margin-top: 3rem;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid #555;
       padding-top: 1rem;
     }
+
     footer a {
       display: block;
-      color: #0066cc;
+      color: var(--accent-color);
       text-decoration: none;
       margin: 0.3rem 0;
     }
+
     footer a:hover {
       text-decoration: underline;
+    }
+
+    canvas#snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .controls {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10000;
+    }
+
+    .controls button {
+      margin-left: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .controls button:hover {
+      opacity: 0.85;
+    }
+
+    body.natale {
+      --bg-color: #8b0000;
+      --text-color: #fff9e6;
+      --accent-color: gold;
+      font-family: 'Georgia', serif;
     }
   </style>
 </head>
 <body>
+
+  <canvas id="snow"></canvas>
+
+  <div class="controls">
+    <button id="toggle-theme">🎄 Cambia Tema</button>
+    <button id="toggle-snow">❄️ Neve OFF</button>
+  </div>
 
   <h1>Benvenuto sulla mia pagina</h1>
 
@@ -41,10 +97,71 @@
     <a href="https://hash000000.github.io/pages/deathstranding2gallery.html" target="_blank" rel="noopener noreferrer">
       Death Stranding 2 Gallery
     </a>
-    <!-- Aggiungi altri link qui -->
     <a href="https://example.com" target="_blank" rel="noopener noreferrer">Altro link</a>
     <a href="https://google.com" target="_blank" rel="noopener noreferrer">Google</a>
   </footer>
+
+  <script>
+    // Snow logic
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    let snowActive = true;
+
+    let flakes = Array.from({length: 150}, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 3 + 1,
+      d: Math.random() + 1
+    }));
+
+    function drawSnow() {
+      if (!snowActive) return;
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      for (let f of flakes) {
+        ctx.moveTo(f.x, f.y);
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      moveFlakes();
+    }
+
+    function moveFlakes() {
+      for (let i = 0; i < flakes.length; i++) {
+        let f = flakes[i];
+        f.y += Math.pow(f.d, 2) + 1;
+        f.x += Math.sin(f.y * 0.01);
+        if (f.y > height) {
+          flakes[i] = { x: Math.random() * width, y: 0, r: f.r, d: f.d };
+        }
+      }
+    }
+
+    setInterval(() => {
+      ctx.clearRect(0, 0, width, height);
+      if (snowActive) drawSnow();
+    }, 33);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    // Toggle snow button
+    document.getElementById('toggle-snow').addEventListener('click', () => {
+      snowActive = !snowActive;
+      document.getElementById('toggle-snow').textContent = snowActive ? '❄️ Neve OFF' : '❄️ Neve ON';
+      if (!snowActive) ctx.clearRect(0, 0, width, height);
+    });
+
+    // Toggle theme button
+    document.getElementById('toggle-theme').addEventListener('click', () => {
+      document.body.classList.toggle('natale');
+    });
+  </script>
 
 </body>
 </html>
