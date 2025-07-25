@@ -2,51 +2,49 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galleria Death Stranding 2</title>
-  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Homepage</title>
   <style>
     body {
-      font-family: sans-serif;
-      padding: 2rem;
-      background: #111;
-      color: #eee;
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #fafafa;
+      color: #333;
     }
-    .gallery a {
-      display: inline-block;
-      margin: 8px;
-      border: 2px solid #333;
+    footer {
+      margin-top: 3rem;
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
     }
-    .gallery img {
-      max-width: 200px;
-      height: auto;
+    footer a {
       display: block;
+      color: #0066cc;
+      text-decoration: none;
+      margin: 0.3rem 0;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <h1>Galleria: Death Stranding 2</h1>
+  <h1>Benvenuto sulla mia pagina</h1>
 
-  <div class="gallery" id="gallery">
-    <a href="img/deathstranding2/foto 1.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
-      <img src="img/deathstranding2/foto 1.jpg" alt="foto1" />
-    </a>
-    <a href="img/deathstranding2/foto 2.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
-      <img src="img/deathstranding2/foto 2.jpg" alt="foto2" />
-    </a>
-    <!-- Continua così con altre foto -->
-  </div>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+    Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.
+  </p>
 
-  <script type="module">
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '#gallery',
-      children: 'a',
-      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js')
-    });
-    lightbox.init();
-  </script>
+  <footer>
+    <h2>Link utili</h2>
+    <a href="https://hash000000.github.io/pages/deathstranding2gallery.html" target="_blank" rel="noopener noreferrer">
+      Death Stranding 2 Gallery
+    </a>
+    <!-- Aggiungi altri link qui -->
+    <a href="https://example.com" target="_blank" rel="noopener noreferrer">Altro link</a>
+    <a href="https://google.com" target="_blank" rel="noopener noreferrer">Google</a>
+  </footer>
 
 </body>
 </html>
