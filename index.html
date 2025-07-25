@@ -3,27 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Homepage</title>
+  <title>Homepage di Hal</title>
   <style>
     :root {
-      --bg-color: #111;
-      --text-color: #eee;
-      --accent-color: #0066cc;
+      --bg-color: #0b0b0b;
+      --text-color: #eaeaea;
+      --accent-color: #b8860b;
     }
 
     body {
-      font-family: Arial, sans-serif;
       margin: 2rem;
       background-color: var(--bg-color);
       color: var(--text-color);
+      font-family: Georgia, serif;
       position: relative;
       overflow-x: hidden;
-      transition: background 0.5s, color 0.5s;
+    }
+
+    h1 {
+      font-size: 2rem;
     }
 
     footer {
       margin-top: 3rem;
-      border-top: 1px solid #555;
+      border-top: 1px solid #444;
       padding-top: 1rem;
     }
 
@@ -38,58 +41,69 @@
       text-decoration: underline;
     }
 
-    canvas#snow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
     .controls {
       position: fixed;
       top: 1rem;
       right: 1rem;
-      z-index: 10000;
+      z-index: 1000;
     }
 
     .controls button {
-      margin-left: 0.5rem;
+      background: var(--accent-color);
+      color: white;
+      border: none;
       padding: 0.5rem 1rem;
       font-size: 0.9rem;
-      background: var(--accent-color);
-      border: none;
-      color: white;
-      cursor: pointer;
       border-radius: 5px;
+      cursor: pointer;
     }
 
     .controls button:hover {
       opacity: 0.85;
     }
 
-    body.natale {
-      --bg-color: #8b0000;
-      --text-color: #fff9e6;
-      --accent-color: gold;
-      font-family: 'Georgia', serif;
+    /* Stelle animate */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <canvas id="snow"></canvas>
-
   <div class="controls">
-    <button id="toggle-theme">🎄 Cambia Tema</button>
-    <button id="toggle-snow">❄️ Neve OFF</button>
+    <button id="toggle-stars">✨ Stelle OFF</button>
   </div>
 
-  <h1>Benvenuto sulla mia pagina</h1>
+  <div class="stars" id="stars"></div>
+
+  <h1>Benvenuto sulla mia pagina!</h1>
 
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-    Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.
+    Nella mia adolescenza ho conosciuto una internet diversa, un approdo per menti libere lontana dalle logiche di auto promozione.
+    Un non-luogo irrimediabilmente perso, ormai masticato e riproposto grottescamente da chi ha saputo sfruttarne le qualità.
+    Questo è il mio spazio; un'isola nostalgica dove poter essere presente lontano dalle piattaforme e dalle loro contraddizioni.
   </p>
 
   <footer>
@@ -102,65 +116,37 @@
   </footer>
 
   <script>
-    // Snow logic
-    const canvas = document.getElementById('snow');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-    let snowActive = true;
+    const starsContainer = document.getElementById('stars');
+    const toggleBtn = document.getElementById('toggle-stars');
+    let starsActive = true;
 
-    let flakes = Array.from({length: 150}, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: Math.random() * 3 + 1,
-      d: Math.random() + 1
-    }));
-
-    function drawSnow() {
-      if (!snowActive) return;
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'white';
-      ctx.beginPath();
-      for (let f of flakes) {
-        ctx.moveTo(f.x, f.y);
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-      }
-      ctx.fill();
-      moveFlakes();
-    }
-
-    function moveFlakes() {
-      for (let i = 0; i < flakes.length; i++) {
-        let f = flakes[i];
-        f.y += Math.pow(f.d, 2) + 1;
-        f.x += Math.sin(f.y * 0.01);
-        if (f.y > height) {
-          flakes[i] = { x: Math.random() * width, y: 0, r: f.r, d: f.d };
-        }
+    function createStars(count = 100) {
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        starsContainer.appendChild(star);
       }
     }
 
-    setInterval(() => {
-      ctx.clearRect(0, 0, width, height);
-      if (snowActive) drawSnow();
-    }, 33);
+    function clearStars() {
+      starsContainer.innerHTML = '';
+    }
 
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+    toggleBtn.addEventListener('click', () => {
+      starsActive = !starsActive;
+      toggleBtn.textContent = starsActive ? '✨ Stelle OFF' : '✨ Stelle ON';
+      if (starsActive) {
+        createStars();
+      } else {
+        clearStars();
+      }
     });
 
-    // Toggle snow button
-    document.getElementById('toggle-snow').addEventListener('click', () => {
-      snowActive = !snowActive;
-      document.getElementById('toggle-snow').textContent = snowActive ? '❄️ Neve OFF' : '❄️ Neve ON';
-      if (!snowActive) ctx.clearRect(0, 0, width, height);
-    });
-
-    // Toggle theme button
-    document.getElementById('toggle-theme').addEventListener('click', () => {
-      document.body.classList.toggle('natale');
-    });
+    // Inizializza
+    createStars();
   </script>
 
 </body>
