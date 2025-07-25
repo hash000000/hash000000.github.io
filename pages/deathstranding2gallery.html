@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galleria Death Stranding 2</title>
+  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #111;
+      color: #eee;
+    }
+    .gallery a {
+      display: inline-block;
+      margin: 8px;
+      border: 2px solid #333;
+    }
+    .gallery img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Galleria: Death Stranding 2</h1>
+
+  <div class="gallery" id="gallery">
+    <a href="img/deathstranding2/foto 1.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
+      <img src="img/deathstranding2/foto 1.jpg" alt="foto1" />
+    </a>
+    <a href="img/deathstranding2/foto 2.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
+      <img src="img/deathstranding2/foto 2.jpg" alt="foto2" />
+    </a>
+    <!-- Continua così con altre foto -->
+  </div>
+
+  <script type="module">
+    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#gallery',
+      children: 'a',
+      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js')
+    });
+    lightbox.init();
+  </script>
+
+</body>
+</html>
