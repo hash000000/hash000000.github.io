@@ -1,22 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galleria PhotoSwipe</title>
+  <title>Galleria Death Stranding 2</title>
   <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #111;
+      color: #eee;
+    }
+    .gallery a {
+      display: inline-block;
+      margin: 8px;
+      border: 2px solid #333;
+    }
+    .gallery img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Galleria</h1>
+  <h1>Galleria: Death Stranding 2</h1>
+
   <div class="gallery" id="gallery">
-    <a href="img/foto1.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
-      <img src="img/deathstranding/foto1.jpg" width="200" />
+    <a href="img/deathstranding2/foto1.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
+      <img src="img/deathstranding2/foto1.jpg" alt="foto1" />
     </a>
-    <a href="img/deathstranding/foto2.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
-      <img src="img/foto2.jpg" width="200" />
+    <a href="img/deathstranding2/foto2.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
+      <img src="img/deathstranding2/foto2.jpg" alt="foto2" />
     </a>
-    <!-- Aggiungi altri <a> come sopra -->
+    <!-- Continua così con altre foto -->
   </div>
 
   <script type="module">
