@@ -216,12 +216,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-autoplay.min.js"></script>
 
     <script>
+        // Aspetta che tutti gli script siano caricati
+        window.addEventListener('load', function() {
         class DeathStrandingGallery {
             constructor() {
                 this.galleryContainer = document.getElementById('gallery');
                 this.photoCountElement = document.getElementById('photoCount');
                 this.imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
-                this.galleryFolder = 'ds2gallery';
+                this.galleryFolder = 'deathstranding2gallery';
                 this.lightGalleryInstance = null;
                 
                 this.init();
@@ -240,7 +242,7 @@
                 const imageList = await this.getImageList();
                 
                 if (imageList.length === 0) {
-                    this.showError('Nessuna immagine trovata nella cartella ds2gallery');
+                    this.showError('Nessuna immagine trovata nella cartella deathstranding2gallery');
                     return;
                 }
                 
@@ -300,7 +302,6 @@
                 }
                 
                 this.lightGalleryInstance = lightGallery(this.galleryContainer, {
-                    plugins: [lgZoom, lgThumbnail, lgFullscreen, lgAutoplay],
                     speed: 400,
                     download: true,
                     counter: true,
@@ -344,6 +345,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             new DeathStrandingGallery();
         });
+        
+        }); // Fine del window.addEventListener('load')
         
         // Gestione del ridimensionamento della finestra
         window.addEventListener('resize', () => {
