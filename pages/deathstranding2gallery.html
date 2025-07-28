@@ -28,9 +28,7 @@
         .header {
             text-align: center;
             padding: 3rem 2rem;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path d="M0,100 Q250,50 500,100 T1000,100 L1000,200 L0,200 Z" fill="%23333"/></svg>');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6));
         }
         
         .header h1 {
@@ -140,25 +138,6 @@
             opacity: 1;
         }
         
-        .loading {
-            text-align: center;
-            padding: 4rem 2rem;
-            font-size: 1.2rem;
-            opacity: 0.7;
-        }
-        
-        .loading::after {
-            content: '...';
-            animation: dots 1.5s steps(5, end) infinite;
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            90%, 100% { content: ''; }
-        }
-        
         .error {
             text-align: center;
             padding: 4rem 2rem;
@@ -200,11 +179,11 @@
     
     <div class="container">
         <div class="gallery-info">
-            <div class="photo-count" id="photoCount">Caricamento foto...</div>
+            <div class="photo-count">Loading images...</div>
         </div>
         
         <div id="gallery" class="gallery">
-            <div class="loading">Caricamento galleria</div>
+            <!-- Le immagini verranno generate automaticamente dal JavaScript -->
         </div>
     </div>
 
@@ -213,151 +192,247 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-zoom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-thumbnail.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-fullscreen.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-autoplay.min.js"></script>
 
     <script>
-        // Aspetta che tutti gli script siano caricati
-        window.addEventListener('load', function() {
-        class DeathStrandingGallery {
-            constructor() {
-                this.galleryContainer = document.getElementById('gallery');
-                this.photoCountElement = document.getElementById('photoCount');
-                this.imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
-                this.galleryFolder = 'deathstranding2gallery';
-                this.lightGalleryInstance = null;
-                
-                this.init();
-            }
+        // CONFIGURAZIONE IMMAGINI
+        // Sostituisci questa lista con i nomi effettivi delle tue immagini
+        const imageList = [
+'ds2 (1).jpg'
+'ds2 (10).jpg'
+'ds2 (100).jpg'
+'ds2 (101).jpg'
+'ds2 (102).jpg'
+'ds2 (103).jpg'
+'ds2 (104).jpg'
+'ds2 (105).jpg'
+'ds2 (106).jpg'
+'ds2 (107).jpg'
+'ds2 (108).jpg'
+'ds2 (109).jpg'
+'ds2 (11).jpg'
+'ds2 (110).jpg'
+'ds2 (111).jpg'
+'ds2 (112).jpg'
+'ds2 (113).jpg'
+'ds2 (114).jpg'
+'ds2 (115).jpg'
+'ds2 (116).jpg'
+'ds2 (117).jpg'
+'ds2 (118).jpg'
+'ds2 (119).jpg'
+'ds2 (12).jpg'
+'ds2 (120).jpg'
+'ds2 (121).jpg'
+'ds2 (122).jpg'
+'ds2 (123).jpg'
+'ds2 (124).jpg'
+'ds2 (125).jpg'
+'ds2 (126).jpg'
+'ds2 (127).jpg'
+'ds2 (128).jpg'
+'ds2 (129).jpg'
+'ds2 (13).jpg'
+'ds2 (130).jpg'
+'ds2 (131).jpg'
+'ds2 (132).jpg'
+'ds2 (133).jpg'
+'ds2 (134).jpg'
+'ds2 (135).jpg'
+'ds2 (136).jpg'
+'ds2 (137).jpg'
+'ds2 (138).jpg'
+'ds2 (139).jpg'
+'ds2 (14).jpg'
+'ds2 (140).jpg'
+'ds2 (141).jpg'
+'ds2 (142).jpg'
+'ds2 (143).jpg'
+'ds2 (144).jpg'
+'ds2 (145).jpg'
+'ds2 (146).jpg'
+'ds2 (147).jpg'
+'ds2 (148).jpg'
+'ds2 (149).jpg'
+'ds2 (15).jpg'
+'ds2 (150).jpg'
+'ds2 (151).jpg'
+'ds2 (152).jpg'
+'ds2 (153).jpg'
+'ds2 (154).jpg'
+'ds2 (155).jpg'
+'ds2 (156).jpg'
+'ds2 (16).jpg'
+'ds2 (17).jpg'
+'ds2 (18).jpg'
+'ds2 (19).jpg'
+'ds2 (2).jpg'
+'ds2 (20).jpg'
+'ds2 (21).jpg'
+'ds2 (22).jpg'
+'ds2 (23).jpg'
+'ds2 (24).jpg'
+'ds2 (25).jpg'
+'ds2 (26).jpg'
+'ds2 (27).jpg'
+'ds2 (28).jpg'
+'ds2 (29).jpg'
+'ds2 (3).jpg'
+'ds2 (30).jpg'
+'ds2 (31).jpg'
+'ds2 (32).jpg'
+'ds2 (33).jpg'
+'ds2 (34).jpg'
+'ds2 (35).jpg'
+'ds2 (36).jpg'
+'ds2 (37).jpg'
+'ds2 (38).jpg'
+'ds2 (39).jpg'
+'ds2 (4).jpg'
+'ds2 (40).jpg'
+'ds2 (41).jpg'
+'ds2 (42).jpg'
+'ds2 (43).jpg'
+'ds2 (44).jpg'
+'ds2 (45).jpg'
+'ds2 (46).jpg'
+'ds2 (47).jpg'
+'ds2 (48).jpg'
+'ds2 (49).jpg'
+'ds2 (5).jpg'
+'ds2 (50).jpg'
+'ds2 (51).jpg'
+'ds2 (52).jpg'
+'ds2 (53).jpg'
+'ds2 (54).jpg'
+'ds2 (55).jpg'
+'ds2 (56).jpg'
+'ds2 (57).jpg'
+'ds2 (58).jpg'
+'ds2 (59).jpg'
+'ds2 (6).jpg'
+'ds2 (60).jpg'
+'ds2 (61).jpg'
+'ds2 (62).jpg'
+'ds2 (63).jpg'
+'ds2 (64).jpg'
+'ds2 (65).jpg'
+'ds2 (66).jpg'
+'ds2 (67).jpg'
+'ds2 (68).jpg'
+'ds2 (69).jpg'
+'ds2 (7).jpg'
+'ds2 (70).jpg'
+'ds2 (71).jpg'
+'ds2 (72).jpg'
+'ds2 (73).jpg'
+'ds2 (74).jpg'
+'ds2 (75).jpg'
+'ds2 (76).jpg'
+'ds2 (77).jpg'
+'ds2 (78).jpg'
+'ds2 (79).jpg'
+'ds2 (8).jpg'
+'ds2 (80).jpg'
+'ds2 (81).jpg'
+'ds2 (82).jpg'
+'ds2 (83).jpg'
+'ds2 (84).jpg'
+'ds2 (85).jpg'
+'ds2 (86).jpg'
+'ds2 (87).jpg'
+'ds2 (88).jpg'
+'ds2 (89).jpg'
+'ds2 (9).jpg'
+'ds2 (90).jpg'
+'ds2 (91).jpg'
+'ds2 (92).jpg'
+'ds2 (93).jpg'
+'ds2 (94).jpg'
+'ds2 (95).jpg'
+'ds2 (96).jpg'
+'ds2 (97).jpg'
+'ds2 (98).jpg'
+'ds2 (99).jpg'
+            // Aggiungi qui tutti i nomi delle tue immagini...
+            // Esempio per 100 immagini con numerazione:
+            ...Array.from({length: 100}, (_, i) => `ds2_${String(i + 1).padStart(3, '0')}.jpg`)
+        ];
+        
+        const galleryFolder = 'deathstranding2gallery';
+        
+        function createGallery() {
+            const galleryContainer = document.getElementById('gallery');
+            const photoCountElement = document.querySelector('.photo-count');
             
-            async init() {
-                try {
-                    await this.loadImages();
-                } catch (error) {
-                    this.showError('Errore nel caricamento delle immagini: ' + error.message);
-                }
-            }
+            // Aggiorna il contatore
+            photoCountElement.textContent = `${imageList.length} foto nella galleria`;
             
-            async loadImages() {
-                // Lista delle immagini - dovrai sostituire questa con i nomi effettivi delle tue immagini
-                const imageList = await this.getImageList();
-                
-                if (imageList.length === 0) {
-                    this.showError('Nessuna immagine trovata nella cartella deathstranding2gallery');
-                    return;
-                }
-                
-                this.renderGallery(imageList);
-                this.initLightGallery();
-                this.updatePhotoCount(imageList.length);
-            }
+            // Genera HTML per le immagini
+            let galleryHTML = '';
             
-            async getImageList() {
-                // Questo è un esempio di come potresti organizzare le tue immagini
-                // Sostituisci con i nomi effettivi dei tuoi file
-                const sampleImages = [];
+            imageList.forEach((imageName, index) => {
+                const imagePath = `${galleryFolder}/${imageName}`;
+                const imageTitle = formatImageTitle(imageName);
                 
-                // Genera nomi di esempio - sostituisci con i tuoi file reali
-                for (let i = 1; i <= 100; i++) {
-                    const paddedNumber = i.toString().padStart(3, '0');
-                    sampleImages.push(`ds2_screenshot_${paddedNumber}.jpg`);
-                }
-                
-                // In un ambiente reale, potresti voler verificare l'esistenza dei file
-                // Qui assumiamo che tutti i file esistano
-                return sampleImages;
-            }
+                galleryHTML += `
+                    <div class="gallery-item" 
+                         data-src="${imagePath}"
+                         data-sub-html="<h4>${imageTitle}</h4><p>Screenshot ${index + 1} di ${imageList.length}</p>">
+                        <img src="${imagePath}" 
+                             alt="${imageTitle}"
+                             loading="lazy"
+                             onerror="handleImageError(this)">
+                    </div>
+                `;
+            });
             
-            renderGallery(imageList) {
-                let galleryHTML = '';
-                
-                imageList.forEach((imageName, index) => {
-                    const imagePath = `${this.galleryFolder}/${imageName}`;
-                    const imageTitle = this.formatImageTitle(imageName);
-                    
-                    galleryHTML += `
-                        <div class="gallery-item" 
-                             data-src="${imagePath}"
-                             data-sub-html="<h4>${imageTitle}</h4><p>Screenshot ${index + 1} di ${imageList.length}</p>">
-                            <img src="${imagePath}" 
-                                 alt="${imageTitle}"
-                                 loading="lazy"
-                                 onerror="this.parentElement.style.display='none'">
-                        </div>
-                    `;
-                });
-                
-                this.galleryContainer.innerHTML = galleryHTML;
-            }
+            galleryContainer.innerHTML = galleryHTML;
             
-            formatImageTitle(filename) {
-                return filename
-                    .replace(/\.[^/.]+$/, '') // Rimuove l'estensione
-                    .replace(/[_-]/g, ' ')     // Sostituisce _ e - con spazi
-                    .replace(/\b\w/g, l => l.toUpperCase()); // Capitalizza ogni parola
-            }
-            
-            initLightGallery() {
-                if (this.lightGalleryInstance) {
-                    this.lightGalleryInstance.destroy();
-                }
-                
-                this.lightGalleryInstance = lightGallery(this.galleryContainer, {
-                    speed: 400,
-                    download: true,
-                    counter: true,
-                    getCaptionFromTitleOrAlt: false,
-                    appendSubHtmlTo: '.lg-sub-html',
-                    subHtmlSelectorRelative: true,
-                    thumbnail: true,
-                    animateThumb: true,
-                    showThumbByDefault: false,
-                    thumbWidth: 100,
-                    thumbHeight: 80,
-                    thumbMargin: 5,
-                    zoom: true,
-                    scale: 1,
-                    autoplay: false,
-                    progressBar: true,
-                    fullScreen: true,
-                    backdropDuration: 300,
-                    hideBarsDelay: 2000,
-                    loop: true,
-                    escKey: true,
-                    keyPress: true,
-                    controls: true,
-                    mousewheel: true,
-                    swipeThreshold: 50,
-                    enableSwipe: true,
-                    enableDrag: true
-                });
-            }
-            
-            updatePhotoCount(count) {
-                this.photoCountElement.textContent = `${count} foto nella galleria`;
-            }
-            
-            showError(message) {
-                this.galleryContainer.innerHTML = `<div class="error">${message}</div>`;
-            }
+            // Inizializza LightGallery
+            lightGallery(galleryContainer, {
+                speed: 400,
+                download: true,
+                counter: true,
+                getCaptionFromTitleOrAlt: false,
+                appendSubHtmlTo: '.lg-sub-html',
+                subHtmlSelectorRelative: true,
+                thumbnail: true,
+                animateThumb: true,
+                showThumbByDefault: false,
+                thumbWidth: 100,
+                thumbHeight: 80,
+                thumbMargin: 5,
+                zoom: true,
+                scale: 1,
+                fullScreen: true,
+                backdropDuration: 300,
+                hideBarsDelay: 2000,
+                loop: true,
+                escKey: true,
+                keyPress: true,
+                controls: true,
+                mousewheel: true,
+                swipeThreshold: 50,
+                enableSwipe: true,
+                enableDrag: true
+            });
+        }
+        
+        function formatImageTitle(filename) {
+            return filename
+                .replace(/\.[^/.]+$/, '') // Rimuove l'estensione
+                .replace(/[_-]/g, ' ')     // Sostituisce _ e - con spazi
+                .replace(/\b\w/g, l => l.toUpperCase()); // Capitalizza ogni parola
+        }
+        
+        function handleImageError(img) {
+            // Nasconde l'immagine se non può essere caricata
+            img.parentElement.style.display = 'none';
+            console.warn(`Immagine non trovata: ${img.src}`);
         }
         
         // Inizializza la galleria quando la pagina è caricata
-        document.addEventListener('DOMContentLoaded', () => {
-            new DeathStrandingGallery();
-        });
-        
-        }); // Fine del window.addEventListener('load')
-        
-        // Gestione del ridimensionamento della finestra
-        window.addEventListener('resize', () => {
-            // Reinizializza LightGallery se necessario
-            setTimeout(() => {
-                if (window.lgData && window.lgData[document.getElementById('gallery').getAttribute('lg-uid')]) {
-                    const instance = window.lgData[document.getElementById('gallery').getAttribute('lg-uid')];
-                    instance.refresh();
-                }
-            }, 100);
-        });
+        document.addEventListener('DOMContentLoaded', createGallery);
     </script>
 </body>
 </html>
