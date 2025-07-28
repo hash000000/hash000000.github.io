@@ -1,52 +1,360 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galleria Death Stranding 2</title>
-  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css" />
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 2rem;
-      background: #111;
-      color: #eee;
-    }
-    .gallery a {
-      display: inline-block;
-      margin: 8px;
-      border: 2px solid #333;
-    }
-    .gallery img {
-      max-width: 200px;
-      height: auto;
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Death Stranding 2 - Gallery</title>
+    
+    <!-- LightGallery CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-zoom.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-thumbnail.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-fullscreen.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path d="M0,100 Q250,50 500,100 T1000,100 L1000,200 L0,200 Z" fill="%23333"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #0066cc, #004499);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .gallery-info {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .photo-count {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+        
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(0, 102, 204, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item::after {
+            content: '🔍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+        
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            90%, 100% { content: ''; }
+        }
+        
+        .error {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #ff6b6b;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="header">
+        <h1>Death Stranding 2</h1>
+        <p>Una collezione di screenshot dal mondo di Kojima Productions</p>
+    </div>
+    
+    <div class="container">
+        <div class="gallery-info">
+            <div class="photo-count" id="photoCount">Caricamento foto...</div>
+        </div>
+        
+        <div id="gallery" class="gallery">
+            <div class="loading">Caricamento galleria</div>
+        </div>
+    </div>
 
-  <h1>Galleria: Death Stranding 2</h1>
+    <!-- LightGallery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-zoom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-thumbnail.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-fullscreen.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/lg-autoplay.min.js"></script>
 
-  <div class="gallery" id="gallery">
-    <a href="img/deathstranding2/foto 1.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
-      <img src="img/deathstranding2/foto 1.jpg" alt="foto1" />
-    </a>
-    <a href="img/deathstranding2/foto 2.jpg" data-pswp-width="1600" data-pswp-height="900" target="_blank">
-      <img src="img/deathstranding2/foto 2.jpg" alt="foto2" />
-    </a>
-    <!-- Continua così con altre foto -->
-  </div>
-
-  <script type="module">
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js';
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '#gallery',
-      children: 'a',
-      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js')
-    });
-    lightbox.init();
-  </script>
-
+    <script>
+        class DeathStrandingGallery {
+            constructor() {
+                this.galleryContainer = document.getElementById('gallery');
+                this.photoCountElement = document.getElementById('photoCount');
+                this.imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
+                this.galleryFolder = 'ds2gallery';
+                this.lightGalleryInstance = null;
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.loadImages();
+                } catch (error) {
+                    this.showError('Errore nel caricamento delle immagini: ' + error.message);
+                }
+            }
+            
+            async loadImages() {
+                // Lista delle immagini - dovrai sostituire questa con i nomi effettivi delle tue immagini
+                const imageList = await this.getImageList();
+                
+                if (imageList.length === 0) {
+                    this.showError('Nessuna immagine trovata nella cartella ds2gallery');
+                    return;
+                }
+                
+                this.renderGallery(imageList);
+                this.initLightGallery();
+                this.updatePhotoCount(imageList.length);
+            }
+            
+            async getImageList() {
+                // Questo è un esempio di come potresti organizzare le tue immagini
+                // Sostituisci con i nomi effettivi dei tuoi file
+                const sampleImages = [];
+                
+                // Genera nomi di esempio - sostituisci con i tuoi file reali
+                for (let i = 1; i <= 100; i++) {
+                    const paddedNumber = i.toString().padStart(3, '0');
+                    sampleImages.push(`ds2_screenshot_${paddedNumber}.jpg`);
+                }
+                
+                // In un ambiente reale, potresti voler verificare l'esistenza dei file
+                // Qui assumiamo che tutti i file esistano
+                return sampleImages;
+            }
+            
+            renderGallery(imageList) {
+                let galleryHTML = '';
+                
+                imageList.forEach((imageName, index) => {
+                    const imagePath = `${this.galleryFolder}/${imageName}`;
+                    const imageTitle = this.formatImageTitle(imageName);
+                    
+                    galleryHTML += `
+                        <div class="gallery-item" 
+                             data-src="${imagePath}"
+                             data-sub-html="<h4>${imageTitle}</h4><p>Screenshot ${index + 1} di ${imageList.length}</p>">
+                            <img src="${imagePath}" 
+                                 alt="${imageTitle}"
+                                 loading="lazy"
+                                 onerror="this.parentElement.style.display='none'">
+                        </div>
+                    `;
+                });
+                
+                this.galleryContainer.innerHTML = galleryHTML;
+            }
+            
+            formatImageTitle(filename) {
+                return filename
+                    .replace(/\.[^/.]+$/, '') // Rimuove l'estensione
+                    .replace(/[_-]/g, ' ')     // Sostituisce _ e - con spazi
+                    .replace(/\b\w/g, l => l.toUpperCase()); // Capitalizza ogni parola
+            }
+            
+            initLightGallery() {
+                if (this.lightGalleryInstance) {
+                    this.lightGalleryInstance.destroy();
+                }
+                
+                this.lightGalleryInstance = lightGallery(this.galleryContainer, {
+                    plugins: [lgZoom, lgThumbnail, lgFullscreen, lgAutoplay],
+                    speed: 400,
+                    download: true,
+                    counter: true,
+                    getCaptionFromTitleOrAlt: false,
+                    appendSubHtmlTo: '.lg-sub-html',
+                    subHtmlSelectorRelative: true,
+                    thumbnail: true,
+                    animateThumb: true,
+                    showThumbByDefault: false,
+                    thumbWidth: 100,
+                    thumbHeight: 80,
+                    thumbMargin: 5,
+                    zoom: true,
+                    scale: 1,
+                    autoplay: false,
+                    progressBar: true,
+                    fullScreen: true,
+                    backdropDuration: 300,
+                    hideBarsDelay: 2000,
+                    loop: true,
+                    escKey: true,
+                    keyPress: true,
+                    controls: true,
+                    mousewheel: true,
+                    swipeThreshold: 50,
+                    enableSwipe: true,
+                    enableDrag: true
+                });
+            }
+            
+            updatePhotoCount(count) {
+                this.photoCountElement.textContent = `${count} foto nella galleria`;
+            }
+            
+            showError(message) {
+                this.galleryContainer.innerHTML = `<div class="error">${message}</div>`;
+            }
+        }
+        
+        // Inizializza la galleria quando la pagina è caricata
+        document.addEventListener('DOMContentLoaded', () => {
+            new DeathStrandingGallery();
+        });
+        
+        // Gestione del ridimensionamento della finestra
+        window.addEventListener('resize', () => {
+            // Reinizializza LightGallery se necessario
+            setTimeout(() => {
+                if (window.lgData && window.lgData[document.getElementById('gallery').getAttribute('lg-uid')]) {
+                    const instance = window.lgData[document.getElementById('gallery').getAttribute('lg-uid')];
+                    instance.refresh();
+                }
+            }, 100);
+        });
+    </script>
 </body>
 </html>
