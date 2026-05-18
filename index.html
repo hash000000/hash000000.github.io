@@ -1,304 +1,197 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Da Uomo</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: 'Georgia', serif;
-  }
-  .cover {
-    width: 340px;
-    height: 520px;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    position: relative;
-    border: 1px solid #333;
-    box-shadow: 6px 6px 0 #000, 12px 12px 0 #222;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-  }
-  .cover:active {
-    transform: translate(6px, 6px);
-    box-shadow: none;
-  }
-  .band-top {
-    background: #E75420;
-    flex: 0 0 130px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 16px 20px;
-    border-bottom: 3px solid #000;
-    border-top: 3px solid #000;
-  }
-  .series-line {
-    width: 100%;
-    border-top: 1.5px solid #000;
-    border-bottom: 1.5px solid #000;
-    padding: 4px 0;
-    text-align: center;
-  }
-  .series-text {
-    font-family: 'Georgia', serif;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: #000;
-    font-style: italic;
-  }
-  .band-top-title {
-    font-family: 'Georgia', serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: #000;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  .oval-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  .oval {
-    width: 42px;
-    height: 50px;
-    border: 2px solid #000;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-  }
-  .penguin-svg {
-    width: 26px;
-    height: 32px;
-  }
-  .band-middle {
-    background: #f5f0e8;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 28px;
-    border-top: 3px solid #000;
-    border-bottom: 3px solid #000;
-  }
-  .middle-rule {
-    width: 80%;
-    border: none;
-    border-top: 1.5px solid #000;
-    margin: 14px auto;
-    display: block;
-  }
-  .book-author {
-    font-family: 'Georgia', serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: #111;
-    text-align: center;
-    font-style: italic;
-  }
-  .book-title {
-    font-family: 'Georgia', serif;
-    font-size: 18px;
-    font-weight: bold;
-    color: #111;
-    text-align: center;
-    line-height: 1.45;
-    letter-spacing: 0.3px;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .band-bottom {
-    background: #E75420;
-    flex: 0 0 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    border-top: 3px solid #000;
-    border-bottom: 3px solid #000;
-  }
-  .bottom-label {
-    font-family: 'Georgia', serif;
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: #000;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-  .hint {
-    position: absolute;
-    bottom: -28px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-family: 'Georgia', serif;
-    font-size: 11px;
-    color: #555;
-    letter-spacing: 1px;
-    font-style: italic;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sig. Inverno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --accent-green: #0f8a4e;
+            --accent-glow: rgba(15, 138, 78, 0.15);
+            --text-primary: #e8e8e8;
+            --text-secondary: #888888;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'IBM Plex Mono', monospace;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(
+                    circle at 20% 50%,
+                    rgba(15, 138, 78, 0.03) 0%,
+                    transparent 50%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(15, 138, 78, 0.02) 0%,
+                    transparent 50%
+                );
+            animation: subtlePulse 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Grain texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2'/%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23000' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 0;
+            mix-blend-mode: multiply;
+        }
+
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: auto;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            animation: fadeInSlow 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInSlow {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        pre {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(6px, 1.2vw, 11px);
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px rgba(15, 138, 78, 0.08);
+            white-space: pre;
+            overflow: visible;
+            word-wrap: normal;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            filter: drop-shadow(0 0 2px rgba(15, 138, 78, 0.1));
+            transition: text-shadow 0.6s ease;
+        }
+
+        .content:hover pre {
+            text-shadow: 0 0 15px var(--accent-glow), 0 0 30px rgba(15, 138, 78, 0.15);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            pre {
+                font-size: clamp(5px, 0.8vw, 8px);
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* Remove scrollbars if content overflows */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(15, 138, 78, 0.8);
+        }
+
+        /* Cursor styling */
+        html {
+            cursor: default;
+        }
+
+        a {
+            color: var(--accent-green);
+            text-decoration: none;
+            transition: text-shadow 0.3s ease;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+    </style>
 </head>
 <body>
-<div class="cover" onclick="newEntry()" title="Clicca per un altro">
-  <div class="band-top">
-    <div class="series-line">
-      <span class="series-text">Da Uomo</span>
+    <div class="container">
+        <div class="content">
+            <pre>
+  #  0 0 0 0 0 0
+  0  0 0 0 0 0 0
+  0  0 0 0 0 0 0
+  0  0 0 0 0 0 0
+  0  0 0 0 0 0 0
+  0  0 0 0 0 0 0
+            </pre>
+        </div>
     </div>
-    <div class="oval-wrapper">
-      <div class="oval">
-        <svg class="penguin-svg" viewBox="0 0 26 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="13" cy="19" rx="9" ry="13" fill="#000"/>
-          <ellipse cx="13" cy="18" rx="5.5" ry="8.5" fill="#fff"/>
-          <ellipse cx="10" cy="9" rx="3.5" ry="4" fill="#000"/>
-          <ellipse cx="16" cy="9" rx="3.5" ry="4" fill="#000"/>
-          <ellipse cx="10.5" cy="8.5" rx="1.5" ry="1.8" fill="#fff"/>
-          <ellipse cx="15.5" cy="8.5" rx="1.5" ry="1.8" fill="#fff"/>
-          <ellipse cx="11" cy="8.8" rx="0.7" ry="0.8" fill="#000"/>
-          <ellipse cx="16" cy="8.8" rx="0.7" ry="0.8" fill="#000"/>
-          <polygon points="13,11 11.5,13 14.5,13" fill="#E75420"/>
-          <ellipse cx="7" cy="24" rx="4" ry="2.5" fill="#000" transform="rotate(-20 7 24)"/>
-          <ellipse cx="19" cy="24" rx="4" ry="2.5" fill="#000" transform="rotate(20 19 24)"/>
-          <ellipse cx="9" cy="31" rx="3" ry="1.2" fill="#E75420"/>
-          <ellipse cx="17" cy="31" rx="3" ry="1.2" fill="#E75420"/>
-        </svg>
-      </div>
-    </div>
-    <div class="band-top-title">PENGUIN BOOKS</div>
-  </div>
-
-  <div class="band-middle">
-    <p class="book-author">Ci sono tutta una serie di micro-cose che uno deve sempre stare attento a evitare di fare, sennò è frocio</p>
-    <span class="middle-rule"></span>
-    <p class="book-title" id="title">…</p>
-    <span class="middle-rule"></span>
-  </div>
-
-  <div class="band-bottom">
-    <div class="oval">
-      <svg class="penguin-svg" viewBox="0 0 26 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="13" cy="19" rx="9" ry="13" fill="#000"/>
-        <ellipse cx="13" cy="18" rx="5.5" ry="8.5" fill="#fff"/>
-        <ellipse cx="10" cy="9" rx="3.5" ry="4" fill="#000"/>
-        <ellipse cx="16" cy="9" rx="3.5" ry="4" fill="#000"/>
-        <ellipse cx="10.5" cy="8.5" rx="1.5" ry="1.8" fill="#fff"/>
-        <ellipse cx="15.5" cy="8.5" rx="1.5" ry="1.8" fill="#fff"/>
-        <ellipse cx="11" cy="8.8" rx="0.7" ry="0.8" fill="#000"/>
-        <ellipse cx="16" cy="8.8" rx="0.7" ry="0.8" fill="#000"/>
-        <polygon points="13,11 11.5,13 14.5,13" fill="#E75420"/>
-        <ellipse cx="7" cy="24" rx="4" ry="2.5" fill="#000" transform="rotate(-20 7 24)"/>
-        <ellipse cx="19" cy="24" rx="4" ry="2.5" fill="#000" transform="rotate(20 19 24)"/>
-        <ellipse cx="9" cy="31" rx="3" ry="1.2" fill="#E75420"/>
-        <ellipse cx="17" cy="31" rx="3" ry="1.2" fill="#E75420"/>
-      </svg>
-    </div>
-    <span class="bottom-label">Penguin Books</span>
-  </div>
-
-  <p class="hint">clicca per un altro</p>
-</div>
-
-<script>
-const voci = [
-  "Essere disinvolti nel ballare",
-  "Dare indicazioni al barbiere sul taglio da fare",
-  "Provare dei campioncini di profumo",
-  "Possedere una borsetta Uniqlo",
-  "Fumare la sigaretta elettronica",
-  "Fumare le sigarette slim",
-  "Prendere le noccioline della Cameo con l'apposito cucchiaino e mettersele sulla mano prima di mangiarle durante gli aperitivi",
-  "Arredare casa",
-  "Bere una Weiss, ordinare un margarita",
-  "Chiedere se si può accendere il fungone",
-  "Dire grazie",
-  "Acquistare la frutta al supermercato",
-  "Cambiare l'immagine del profilo di WhatsApp",
-  "Dipingere, essere creativi in generale",
-  "Scrivere una mail",
-  "Lavorare in un'agenzia pubblicitaria",
-  "Viaggiare all'estero",
-  "Rimanere a casa con la fidanzata",
-  "Entrare in un locale e non dire che è pieno di fregna, anche se non è vero",
-  "Invitare qualcuno a iscriversi al tuo canale broadcast",
-  "Abbracciare tuo papà",
-  "Essere disabili",
-  "Fare gli auguri di compleanno",
-  "Consolare qualcuno",
-  "Non bere perché si deve guidare",
-  "Andare a farsi il tampone",
-  "Portarsi il phon al calcetto",
-  "Il trekking",
-  "Scarpe nuove",
-  "Parlare in inglese",
-  "Indossare vestiti chiari",
-  "Dire che non ti piacciono le persone trans",
-  "Giocare in porta",
-  "Le persone francesi",
-  "Inviare una canzone a qualcuno",
-  "Farsi la doccia a casa",
-  "Dire di no in generale",
-  "Dire di sì in generale",
-  "Non evidenziare che gli altri sono dei froci",
-  "Non accorgersi se l'interlocutore è gay",
-  "Non buttare le cartacce per terra",
-  "Usare le spezie in cucina",
-  "Suggerire un sushi",
-  "Toccare le piante",
-  "Rallentare troppo in prossimità dei dossi",
-  "Mettere like su Instagram",
-  "Farsi la terza dose",
-  "Andare ai musei senza la tua ragazza",
-  "Fare delle foto",
-  "Creme solari",
-  "Avere la media dell'otto al liceo",
-  "Impressionarsi",
-  "\"Che ce sta un secchio, regà?\"",
-  "Andare dallo psicoterapeuta",
-  "Creare dei gruppi WhatsApp",
-  "Raggruppare le app in cartelle",
-  "\"Per me un ginseng, grazie\"",
-  "Avocado",
-  "Andare al cinema all'aperto",
-  "Appuntarsi dei pensieri",
-  "Idratarsi",
-  "Subire una schicchera",
-  "Subire una violenza",
-  "Nuotare",
-  "Cantare",
-  "Chiudersi a chiave per pisciare",
-  "Sedersi",
-  "Pranzo nel Tupperware",
-  "Pagare col telefono",
-  "Andare a votare",
-  "Pronunciare il nome degli autori stranieri correttamente",
-  "Pagare il biglietto della metro a Praga",
-  "Tifare le altre italiane in Europa",
-  "Essere entusiasti di qualcosa"
-];
-
-let last = -1;
-function newEntry() {
-  let idx;
-  do { idx = Math.floor(Math.random() * voci.length); } while (idx === last && voci.length > 1);
-  last = idx;
-  document.getElementById('title').textContent = voci[idx];
-}
-newEntry();
-</script>
 </body>
 </html>
