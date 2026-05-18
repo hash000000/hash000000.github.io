@@ -19,8 +19,8 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
+            background: linear-gradient(135deg, #f5ede3 0%, #ede1d5 100%);
+            color: #5a5450;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -29,8 +29,8 @@
         .container {
             width: 100vw;
             height: 100vh;
-            background: white;
-            padding: 16px;
+            background: #faf8f5;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -39,95 +39,76 @@
         
         .inner {
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
             margin: 0 auto;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            line-height: 1.3;
-            color: #1a1a1a;
-            font-weight: 700;
-            white-space: pre;
-            letter-spacing: 1px;
+            margin-bottom: 28px;
+            font-family: 'Georgia', serif;
+            font-size: 32px;
+            line-height: 1.2;
+            color: #8b7355;
+            font-weight: 300;
+            letter-spacing: 2px;
         }
         
         .section {
-            margin-bottom: 16px;
+            margin-bottom: 22px;
         }
         
         .section-title {
             font-size: 10px;
             font-weight: 700;
-            color: #999;
+            color: #a89a8a;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 8px;
+            letter-spacing: 1.2px;
+            margin-bottom: 10px;
         }
         
         label {
             display: block;
-            font-size: 13px;
-            color: #333;
-            margin-bottom: 6px;
+            font-size: 14px;
+            color: #6b6360;
+            margin-bottom: 8px;
             font-weight: 500;
         }
         
         input[type="time"],
         select {
             width: 100%;
-            padding: 8px 10px;
-            font-size: 15px;
-            border: 2px solid #ddd;
-            border-radius: 0;
-            background: white;
-            color: #333;
-            transition: border-color 0.2s;
-            font-family: 'Monaco', 'Courier New', monospace;
-            display: none;
-        }
-        
-        .time-button {
-            width: 100%;
             padding: 10px 12px;
-            border: 2px solid #ddd;
-            border-radius: 0;
-            background: white;
-            color: #1a1a1a;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
+            font-size: 16px;
+            border: 1px solid #e0d5cb;
+            border-radius: 4px;
+            background: #fefdfb;
+            color: #5a5450;
             transition: all 0.2s;
             font-family: 'Monaco', 'Courier New', monospace;
-            text-align: center;
-            letter-spacing: 0.5px;
         }
         
-        .time-button:hover {
-            background: #f5f5f5;
-            border-color: #999;
-        }
-        
-        .time-button:active {
-            background: #efefef;
+        input[type="time"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #b8a08f;
+            background: #fffbf7;
+            box-shadow: 0 0 0 3px rgba(184, 160, 143, 0.08);
         }
         
         .toggle-group {
             display: flex;
             gap: 0;
-            margin-top: 8px;
+            margin-top: 10px;
         }
         
         .toggle-btn {
             flex: 1;
-            padding: 8px 10px;
-            border: 2px solid #ddd;
-            border-radius: 0;
-            background: white;
-            color: #333;
+            padding: 10px 12px;
+            border: 1px solid #e0d5cb;
+            border-radius: 4px;
+            background: #fefdfb;
+            color: #6b6360;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -135,17 +116,18 @@
         }
         
         .toggle-btn:first-child {
-            border-right: 1px solid #ddd;
+            margin-right: 8px;
         }
         
         .toggle-btn.active {
-            background: #4a90e2;
-            color: white;
-            border-color: #4a90e2;
+            background: #8b7355;
+            color: #faf8f5;
+            border-color: #8b7355;
         }
         
         .toggle-btn:hover:not(.active) {
-            background: #f5f5f5;
+            background: #f5f1ed;
+            border-color: #d4c9be;
         }
         
         .hidden {
@@ -153,135 +135,136 @@
         }
         
         .result-card {
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 0;
-            padding: 12px;
-            margin-bottom: 10px;
+            background: #fefdfb;
+            border: 1px solid #e0d5cb;
+            border-radius: 4px;
+            padding: 14px;
+            margin-bottom: 12px;
         }
         
         .result-card.primary {
-            background: #e8f1ff;
-            border-color: #4a90e2;
+            background: #f5ede3;
+            border-color: #d4c9be;
         }
         
         .result-label {
             font-size: 10px;
-            color: #999;
+            color: #a89a8a;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 1.2px;
             margin-bottom: 6px;
             font-weight: 700;
         }
         
         .result-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a1a1a;
+            font-size: 32px;
+            font-weight: 300;
+            color: #8b7355;
             font-family: 'Monaco', 'Courier New', monospace;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
         .result-card.primary .result-value {
-            color: #4a90e2;
+            color: #8b7355;
         }
         
         .overtime-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            gap: 8px;
             margin-top: 10px;
         }
         
         .overtime-item {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 0;
-            padding: 8px;
+            background: #fefdfb;
+            border: 1px solid #e0d5cb;
+            border-radius: 4px;
+            padding: 10px;
             text-align: center;
         }
         
         .overtime-label {
             font-size: 10px;
-            color: #999;
-            margin-bottom: 3px;
+            color: #a89a8a;
+            margin-bottom: 4px;
             font-weight: 700;
-        }
-        
-        .overtime-time {
-            font-size: 16px;
-            font-weight: 700;
-            color: #4a90e2;
-            font-family: 'Monaco', 'Courier New', monospace;
             letter-spacing: 0.5px;
         }
         
+        .overtime-time {
+            font-size: 18px;
+            font-weight: 500;
+            color: #8b7355;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
         .info-box {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 0;
-            padding: 8px 10px;
+            background: #fef4e6;
+            border: 1px solid #e6d4c3;
+            border-radius: 4px;
+            padding: 10px 12px;
             font-size: 12px;
-            color: #856404;
+            color: #8b7355;
             margin-top: 8px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         
         .info-box.warning {
-            background: #fff3cd;
-            border-color: #ffc107;
-            color: #856404;
+            background: #fef4e6;
+            border-color: #e6d4c3;
+            color: #8b7355;
         }
         
         .info-box.success {
-            background: #d4edda;
-            border-color: #28a745;
-            color: #155724;
+            background: #e8f3e8;
+            border-color: #d4e0d4;
+            color: #5a6b5a;
         }
         
         button {
             width: 100%;
-            padding: 10px;
-            background: #4a90e2;
-            color: white;
-            border: 2px solid #4a90e2;
-            border-radius: 0;
+            padding: 11px;
+            background: #8b7355;
+            color: #faf8f5;
+            border: 1px solid #8b7355;
+            border-radius: 4px;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 14px;
+            margin-top: 16px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
         
         button:hover {
-            background: #357abd;
-            border-color: #357abd;
+            background: #6b5445;
+            border-color: #6b5445;
         }
         
         button:active {
-            opacity: 0.9;
+            opacity: 0.95;
         }
         
         .reset-btn {
-            background: #e0e0e0;
-            color: #333;
-            border-color: #e0e0e0;
+            background: #e0d5cb;
+            color: #6b6360;
+            border-color: #e0d5cb;
             margin-top: 8px;
         }
         
         .reset-btn:hover {
-            background: #d0d0d0;
-            border-color: #d0d0d0;
+            background: #d4c9be;
+            border-color: #d4c9be;
         }
         
         .details-row {
             display: flex;
             justify-content: space-between;
-            padding: 4px 0;
-            font-size: 12px;
-            border-bottom: 1px solid #efefef;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #ede8e1;
         }
         
         .details-row:last-child {
@@ -289,12 +272,12 @@
         }
         
         .details-label {
-            color: #666;
+            color: #8b7c70;
         }
         
         .details-value {
-            font-weight: 700;
-            color: #1a1a1a;
+            font-weight: 600;
+            color: #5a5450;
             font-family: 'Monaco', 'Courier New', monospace;
         }
     </style>
@@ -302,69 +285,65 @@
 <body>
     <div class="container">
         <div class="inner">
-        <div class="header">W O R K
-T I M E R</div>
-        
-        <div class="section">
-            <div class="section-title">Orario di entrata</div>
-            <label for="entryTime">A che ora sei entrato?</label>
-            <button type="button" class="time-button" id="entryTimeBtn" onclick="document.getElementById('entryTimeInput').click();">08:30</button>
-            <input type="time" id="entryTimeInput" value="08:30">
-        </div>
-        
-        <div class="section">
-            <div class="section-title">Pausa pranzo</div>
-            <label>Sei uscito per la pausa pranzo?</label>
-            <div class="toggle-group">
-                <button type="button" class="toggle-btn active" data-pause="no">No</button>
-                <button type="button" class="toggle-btn" data-pause="yes">Sì</button>
-            </div>
-        </div>
-        
-        <div id="pauseDetailsSection" class="section hidden">
-            <div class="section-title">Dettagli pausa</div>
-            <label for="pauseStart">Uscita per pausa</label>
-            <button type="button" class="time-button" id="pauseStartBtn" onclick="document.getElementById('pauseStartInput').click();">12:30</button>
-            <input type="time" id="pauseStartInput" value="12:30">
+            <div class="header">Work Timer</div>
             
-            <label for="pauseEnd" style="margin-top: 12px; display: block;">Rientro in ufficio</label>
-            <button type="button" class="time-button" id="pauseEndBtn" onclick="document.getElementById('pauseEndInput').click();">13:00</button>
-            <input type="time" id="pauseEndInput" value="13:00">
-        </div>
-        
-        <div id="resultsSection" class="section hidden">
-            <div class="section-title">Risultati</div>
-            
-            <div id="pauseInfoBox"></div>
-            
-            <div class="result-card primary">
-                <div class="result-label">Uscita senza straordinario</div>
-                <div class="result-value" id="normalExit">-</div>
+            <div class="section">
+                <div class="section-title">Orario di entrata</div>
+                <label for="entryTime">A che ora sei entrato?</label>
+                <input type="time" id="entryTime" value="08:30">
             </div>
             
-            <div class="result-card">
-                <div class="result-label">Dettagli della giornata</div>
-                <div style="font-size: 13px; color: #666; line-height: 1.8;">
-                    <div class="details-row">
-                        <span class="details-label">Ore di lavoro netto:</span>
-                        <span class="details-value">8:48</span>
-                    </div>
-                    <div class="details-row">
-                        <span class="details-label">Pausa pranzo:</span>
-                        <span class="details-value" id="pauseDuration">1:00</span>
-                    </div>
-                    <div class="details-row">
-                        <span class="details-label">Tempo in ufficio:</span>
-                        <span class="details-value" id="officeTime">9:48</span>
-                    </div>
+            <div class="section">
+                <div class="section-title">Pausa pranzo</div>
+                <label>Sei uscito per la pausa pranzo?</label>
+                <div class="toggle-group">
+                    <button type="button" class="toggle-btn active" data-pause="no">No</button>
+                    <button type="button" class="toggle-btn" data-pause="yes">Sì</button>
                 </div>
             </div>
             
-            <div class="result-card">
-                <div class="result-label">Straordinario (ogni 30 minuti)</div>
-                <div class="overtime-grid" id="overtimeGrid"></div>
+            <div id="pauseDetailsSection" class="section hidden">
+                <div class="section-title">Dettagli pausa</div>
+                <label for="pauseStart">Uscita per pausa</label>
+                <input type="time" id="pauseStart" value="12:30">
+                
+                <label for="pauseEnd" style="margin-top: 12px;">Rientro in ufficio</label>
+                <input type="time" id="pauseEnd" value="13:00">
             </div>
-        </div>
+            
+            <div id="resultsSection" class="section hidden">
+                <div class="section-title">Risultati</div>
+                
+                <div id="pauseInfoBox"></div>
+                
+                <div class="result-card primary">
+                    <div class="result-label">Uscita senza straordinario</div>
+                    <div class="result-value" id="normalExit">-</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">Dettagli della giornata</div>
+                    <div style="font-size: 13px; color: #6b6360; line-height: 1.8;">
+                        <div class="details-row">
+                            <span class="details-label">Ore di lavoro netto:</span>
+                            <span class="details-value">8:48</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Pausa pranzo:</span>
+                            <span class="details-value" id="pauseDuration">1:00</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Tempo in ufficio:</span>
+                            <span class="details-value" id="officeTime">9:48</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">Straordinario (ogni 30 minuti)</div>
+                    <div class="overtime-grid" id="overtimeGrid"></div>
+                </div>
+            </div>
         </div>
         
         <button id="calculateBtn" onclick="calculate()">Calcola orario di uscita</button>
@@ -377,32 +356,6 @@ T I M E R</div>
         const resultsSection = document.getElementById('resultsSection');
         
         let pauseMode = 'no';
-        
-        // Time input elements
-        const entryTimeInput = document.getElementById('entryTimeInput');
-        const pauseStartInput = document.getElementById('pauseStartInput');
-        const pauseEndInput = document.getElementById('pauseEndInput');
-        
-        // Time button elements
-        const entryTimeBtn = document.getElementById('entryTimeBtn');
-        const pauseStartBtn = document.getElementById('pauseStartBtn');
-        const pauseEndBtn = document.getElementById('pauseEndBtn');
-        
-        // Sincronizza gli input con i bottoni
-        entryTimeInput.addEventListener('change', function() {
-            entryTimeBtn.textContent = this.value;
-            calculate();
-        });
-        
-        pauseStartInput.addEventListener('change', function() {
-            pauseStartBtn.textContent = this.value;
-            calculate();
-        });
-        
-        pauseEndInput.addEventListener('change', function() {
-            pauseEndBtn.textContent = this.value;
-            calculate();
-        });
         
         pauseToggleButtons.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -431,7 +384,7 @@ T I M E R</div>
         }
         
         function calculate() {
-            const entryStr = entryTimeInput.value;
+            const entryStr = document.getElementById('entryTime').value;
             
             if (!entryStr) {
                 alert('Per favore, inserisci l\'orario di entrata');
@@ -439,15 +392,14 @@ T I M E R</div>
             }
             
             const entryMinutes = timeToMinutes(entryStr);
-            const baseWorkMinutes = 8 * 60 + 48; // 8:48 di lavoro netto
+            const baseWorkMinutes = 8 * 60 + 48;
             let pauseMinutes = 60;
             let pauseInfoMsg = '';
-            let extraMinutes = 0; // minuti extra da recuperare
+            let extraMinutes = 0;
             
-            // Calcola la durata della pausa
             if (pauseMode === 'yes') {
-                const pauseStartStr = pauseStartInput.value;
-                const pauseEndStr = pauseEndInput.value;
+                const pauseStartStr = document.getElementById('pauseStart').value;
+                const pauseEndStr = document.getElementById('pauseEnd').value;
                 
                 if (!pauseStartStr || !pauseEndStr) {
                     alert('Per favore, inserisci gli orari di pausa');
@@ -472,8 +424,6 @@ T I M E R</div>
                 }
             }
             
-            // Calcola l'uscita senza straordinario
-            // Tempo in ufficio = ore di lavoro netto + eventuali minuti extra di pausa
             let exitMinutesWithoutOvertime = entryMinutes + baseWorkMinutes + extraMinutes;
             
             let normalExitMinutes = exitMinutesWithoutOvertime;
@@ -484,13 +434,11 @@ T I M E R</div>
             document.getElementById('normalExit').textContent = minutesToTime(normalExitMinutes);
             document.getElementById('pauseDuration').textContent = minutesToTime(pauseMinutes);
             
-            // Tempo totale in ufficio
             const totalOfficeMinutes = baseWorkMinutes + pauseMinutes;
             document.getElementById('officeTime').textContent = minutesToTime(totalOfficeMinutes);
             
             document.getElementById('pauseInfoBox').innerHTML = pauseInfoMsg;
             
-            // Genera gli orari con straordinario (ogni 30 minuti)
             const overtimeGrid = document.getElementById('overtimeGrid');
             overtimeGrid.innerHTML = '';
             
@@ -514,12 +462,9 @@ T I M E R</div>
         }
         
         function reset() {
-            entryTimeInput.value = '08:30';
-            entryTimeBtn.textContent = '08:30';
-            pauseStartInput.value = '12:30';
-            pauseStartBtn.textContent = '12:30';
-            pauseEndInput.value = '13:00';
-            pauseEndBtn.textContent = '13:00';
+            document.getElementById('entryTime').value = '08:30';
+            document.getElementById('pauseStart').value = '12:30';
+            document.getElementById('pauseEnd').value = '13:00';
             pauseToggleButtons.forEach(b => b.classList.remove('active'));
             pauseToggleButtons[0].classList.add('active');
             pauseMode = 'no';
@@ -527,7 +472,6 @@ T I M E R</div>
             resultsSection.classList.add('hidden');
         }
         
-        // Calcola automaticamente al cambio degli input
         document.getElementById('entryTime').addEventListener('change', calculate);
         document.getElementById('pauseStart').addEventListener('change', calculate);
         document.getElementById('pauseEnd').addEventListener('change', calculate);
