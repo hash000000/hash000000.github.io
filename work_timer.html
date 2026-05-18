@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100vw;
+            height: 100vh;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #1a1a1a;
+            font-weight: 600;
+            white-space: pre;
+        }
+        
+        .section {
+            margin-bottom: 18px;
+        }
+        
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        
+        label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input[type="time"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 0;
+            background: white;
+            color: #333;
+            transition: border-color 0.2s;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        
+        input[type="time"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        
+        .toggle-group {
+            display: flex;
+            gap: 0;
+            margin-top: 10px;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid #ddd;
+            border-radius: 0;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .toggle-btn:first-child {
+            border-right: 1px solid #ddd;
+        }
+        
+        .toggle-btn.active {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+        
+        .toggle-btn:hover:not(.active) {
+            background: #f5f5f5;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result-card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 0;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .result-card.primary {
+            background: #e8f1ff;
+            border-color: #4a90e2;
+        }
+        
+        .result-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        
+        .result-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .result-card.primary .result-value {
+            color: #4a90e2;
+        }
+        
+        .overtime-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .overtime-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 0;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .overtime-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .overtime-time {
+            font-size: 18px;
+            font-weight: 700;
+            color: #4a90e2;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 0;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #856404;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .info-box.warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+        
+        .info-box.success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4a90e2;
+            color: white;
+            border: 2px solid #4a90e2;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        button:hover {
+            background: #357abd;
+            border-color: #357abd;
+        }
+        
+        button:active {
+            opacity: 0.9;
+        }
+        
+        .reset-btn {
+            background: #e0e0e0;
+            color: #333;
+            border-color: #e0e0e0;
+            margin-top: 10px;
+        }
+        
+        .reset-btn:hover {
+            background: #d0d0d0;
+            border-color: #d0d0d0;
+        }
+        
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #efefef;
+        }
+        
+        .details-row:last-child {
+            border-bottom: none;
+        }
+        
+        .details-label {
+            color: #666;
+        }
+        
+        .details-value {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">W O R K
+T I M E R</div>
+        
+        <div class="section">
+            <div class="section-title">Orario di entrata</div>
+            <label for="entryTime">A che ora sei entrato?</label>
+            <input type="time" id="entryTime" value="08:30">
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Pausa pranzo</div>
+            <label>Sei uscito per la pausa pranzo?</label>
+            <div class="toggle-group">
+                <button type="button" class="toggle-btn active" data-pause="no">No</button>
+                <button type="button" class="toggle-btn" data-pause="yes">Sì</button>
+            </div>
+        </div>
+        
+        <div id="pauseDetailsSection" class="section hidden">
+            <div class="section-title">Dettagli pausa</div>
+            <label for="pauseStart">Uscita per pausa</label>
+            <input type="time" id="pauseStart" value="12:00">
+            
+            <label for="pauseEnd" style="margin-top: 16px;">Rientro in ufficio</label>
+            <input type="time" id="pauseEnd" value="13:00">
+        </div>
+        
+        <div id="resultsSection" class="section hidden">
+            <div class="section-title">Risultati</div>
+            
+            <div id="pauseInfoBox"></div>
+            
+            <div class="result-card primary">
+                <div class="result-label">Uscita senza straordinario</div>
+                <div class="result-value" id="normalExit">-</div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-label">Dettagli della giornata</div>
+                <div style="font-size: 13px; color: #666; line-height: 1.8;">
+                    <div class="details-row">
+                        <span class="details-label">Ore di lavoro netto:</span>
+                        <span class="details-value">8:48</span>
+                    </div>
+                    <div class="details-row">
+                        <span class="details-label">Pausa pranzo:</span>
+                        <span class="details-value" id="pauseDuration">1:00</span>
+                    </div>
+                    <div class="details-row">
+                        <span class="details-label">Tempo in ufficio:</span>
+                        <span class="details-value" id="officeTime">9:48</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-label">Straordinario (ogni 30 minuti)</div>
+                <div class="overtime-grid" id="overtimeGrid"></div>
+            </div>
+        </div>
+        
+        <button id="calculateBtn" onclick="calculate()">Calcola orario di uscita</button>
+        <button class="reset-btn" onclick="reset()">Ripristina</button>
+    </div>
+
+    <script>
+        const pauseToggleButtons = document.querySelectorAll('[data-pause]');
+        const pauseDetailsSection = document.getElementById('pauseDetailsSection');
+        const resultsSection = document.getElementById('resultsSection');
+        
+        let pauseMode = 'no';
+        
+        pauseToggleButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                pauseToggleButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                pauseMode = this.dataset.pause;
+                
+                if (pauseMode === 'yes') {
+                    pauseDetailsSection.classList.remove('hidden');
+                } else {
+                    pauseDetailsSection.classList.add('hidden');
+                }
+            });
+        });
+        
+        function timeToMinutes(timeStr) {
+            if (!timeStr) return 0;
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+        
+        function minutesToTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+        }
+        
+        function calculate() {
+            const entryStr = document.getElementById('entryTime').value;
+            
+            if (!entryStr) {
+                alert('Per favore, inserisci l\'orario di entrata');
+                return;
+            }
+            
+            const entryMinutes = timeToMinutes(entryStr);
+            const baseWorkMinutes = 8 * 60 + 48; // 8:48 di lavoro netto
+            let pauseMinutes = 60;
+            let pauseInfoMsg = '';
+            let extraMinutes = 0; // minuti extra da recuperare
+            
+            // Calcola la durata della pausa
+            if (pauseMode === 'yes') {
+                const pauseStartStr = document.getElementById('pauseStart').value;
+                const pauseEndStr = document.getElementById('pauseEnd').value;
+                
+                if (!pauseStartStr || !pauseEndStr) {
+                    alert('Per favore, inserisci gli orari di pausa');
+                    return;
+                }
+                
+                const pauseStartMinutes = timeToMinutes(pauseStartStr);
+                const pauseEndMinutes = timeToMinutes(pauseEndStr);
+                
+                pauseMinutes = pauseEndMinutes - pauseStartMinutes;
+                
+                if (pauseMinutes < 0) {
+                    pauseMinutes += 24 * 60;
+                }
+                
+                if (pauseMinutes < 60) {
+                    pauseInfoMsg = `<div class="info-box warning">⚠️ Pausa inferiore a 1 ora. Verrà calcolata come 1 ora standard.</div>`;
+                    pauseMinutes = 60;
+                } else if (pauseMinutes > 60) {
+                    extraMinutes = pauseMinutes - 60;
+                    pauseInfoMsg = `<div class="info-box success">✓ Pausa superiore a 1 ora. Hai ${minutesToTime(extraMinutes)} di straordinario da recuperare.</div>`;
+                }
+            }
+            
+            // Calcola l'uscita senza straordinario
+            // Tempo in ufficio = ore di lavoro netto + eventuali minuti extra di pausa
+            let exitMinutesWithoutOvertime = entryMinutes + baseWorkMinutes + extraMinutes;
+            
+            let normalExitMinutes = exitMinutesWithoutOvertime;
+            if (normalExitMinutes >= 24 * 60) {
+                normalExitMinutes -= 24 * 60;
+            }
+            
+            document.getElementById('normalExit').textContent = minutesToTime(normalExitMinutes);
+            document.getElementById('pauseDuration').textContent = minutesToTime(pauseMinutes);
+            
+            // Tempo totale in ufficio
+            const totalOfficeMinutes = baseWorkMinutes + pauseMinutes;
+            document.getElementById('officeTime').textContent = minutesToTime(totalOfficeMinutes);
+            
+            document.getElementById('pauseInfoBox').innerHTML = pauseInfoMsg;
+            
+            // Genera gli orari con straordinario (ogni 30 minuti)
+            const overtimeGrid = document.getElementById('overtimeGrid');
+            overtimeGrid.innerHTML = '';
+            
+            for (let i = 1; i <= 4; i++) {
+                const overtimeMinutes = exitMinutesWithoutOvertime + (i * 30);
+                let displayMinutes = overtimeMinutes;
+                if (displayMinutes >= 24 * 60) {
+                    displayMinutes -= 24 * 60;
+                }
+                
+                const item = document.createElement('div');
+                item.className = 'overtime-item';
+                item.innerHTML = `
+                    <div class="overtime-label">+${i * 30} min</div>
+                    <div class="overtime-time">${minutesToTime(displayMinutes)}</div>
+                `;
+                overtimeGrid.appendChild(item);
+            }
+            
+            resultsSection.classList.remove('hidden');
+        }
+        
+        function reset() {
+            document.getElementById('entryTime').value = '08:30';
+            document.getElementById('pauseStart').value = '12:00';
+            document.getElementById('pauseEnd').value = '13:00';
+            pauseToggleButtons.forEach(b => b.classList.remove('active'));
+            pauseToggleButtons[0].classList.add('active');
+            pauseMode = 'no';
+            pauseDetailsSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+        }
+        
+        // Calcola automaticamente al cambio degli input
+        document.getElementById('entryTime').addEventListener('change', calculate);
+        document.getElementById('pauseStart').addEventListener('change', calculate);
+        document.getElementById('pauseEnd').addEventListener('change', calculate);
+    </script>
+</body>
+</html>
