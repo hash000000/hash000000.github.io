@@ -87,12 +87,32 @@
             color: #333;
             transition: border-color 0.2s;
             font-family: 'Monaco', 'Courier New', monospace;
+            display: none;
         }
         
-        input[type="time"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #4a90e2;
+        .time-button {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #ddd;
+            border-radius: 0;
+            background: white;
+            color: #1a1a1a;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Monaco', 'Courier New', monospace;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .time-button:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        
+        .time-button:active {
+            background: #efefef;
         }
         
         .toggle-group {
@@ -288,7 +308,8 @@ T I M E R</div>
         <div class="section">
             <div class="section-title">Orario di entrata</div>
             <label for="entryTime">A che ora sei entrato?</label>
-            <input type="time" id="entryTime" value="08:30">
+            <button type="button" class="time-button" id="entryTimeBtn" onclick="document.getElementById('entryTimeInput').click();">08:30</button>
+            <input type="time" id="entryTimeInput" value="08:30">
         </div>
         
         <div class="section">
@@ -303,10 +324,12 @@ T I M E R</div>
         <div id="pauseDetailsSection" class="section hidden">
             <div class="section-title">Dettagli pausa</div>
             <label for="pauseStart">Uscita per pausa</label>
-            <input type="time" id="pauseStart" value="12:00">
+            <button type="button" class="time-button" id="pauseStartBtn" onclick="document.getElementById('pauseStartInput').click();">12:30</button>
+            <input type="time" id="pauseStartInput" value="12:30">
             
-            <label for="pauseEnd" style="margin-top: 16px;">Rientro in ufficio</label>
-            <input type="time" id="pauseEnd" value="13:00">
+            <label for="pauseEnd" style="margin-top: 12px; display: block;">Rientro in ufficio</label>
+            <button type="button" class="time-button" id="pauseEndBtn" onclick="document.getElementById('pauseEndInput').click();">13:00</button>
+            <input type="time" id="pauseEndInput" value="13:00">
         </div>
         
         <div id="resultsSection" class="section hidden">
@@ -355,6 +378,32 @@ T I M E R</div>
         
         let pauseMode = 'no';
         
+        // Time input elements
+        const entryTimeInput = document.getElementById('entryTimeInput');
+        const pauseStartInput = document.getElementById('pauseStartInput');
+        const pauseEndInput = document.getElementById('pauseEndInput');
+        
+        // Time button elements
+        const entryTimeBtn = document.getElementById('entryTimeBtn');
+        const pauseStartBtn = document.getElementById('pauseStartBtn');
+        const pauseEndBtn = document.getElementById('pauseEndBtn');
+        
+        // Sincronizza gli input con i bottoni
+        entryTimeInput.addEventListener('change', function() {
+            entryTimeBtn.textContent = this.value;
+            calculate();
+        });
+        
+        pauseStartInput.addEventListener('change', function() {
+            pauseStartBtn.textContent = this.value;
+            calculate();
+        });
+        
+        pauseEndInput.addEventListener('change', function() {
+            pauseEndBtn.textContent = this.value;
+            calculate();
+        });
+        
         pauseToggleButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 pauseToggleButtons.forEach(b => b.classList.remove('active'));
@@ -382,7 +431,7 @@ T I M E R</div>
         }
         
         function calculate() {
-            const entryStr = document.getElementById('entryTime').value;
+            const entryStr = entryTimeInput.value;
             
             if (!entryStr) {
                 alert('Per favore, inserisci l\'orario di entrata');
@@ -397,8 +446,8 @@ T I M E R</div>
             
             // Calcola la durata della pausa
             if (pauseMode === 'yes') {
-                const pauseStartStr = document.getElementById('pauseStart').value;
-                const pauseEndStr = document.getElementById('pauseEnd').value;
+                const pauseStartStr = pauseStartInput.value;
+                const pauseEndStr = pauseEndInput.value;
                 
                 if (!pauseStartStr || !pauseEndStr) {
                     alert('Per favore, inserisci gli orari di pausa');
@@ -465,9 +514,12 @@ T I M E R</div>
         }
         
         function reset() {
-            document.getElementById('entryTime').value = '08:30';
-            document.getElementById('pauseStart').value = '12:00';
-            document.getElementById('pauseEnd').value = '13:00';
+            entryTimeInput.value = '08:30';
+            entryTimeBtn.textContent = '08:30';
+            pauseStartInput.value = '12:30';
+            pauseStartBtn.textContent = '12:30';
+            pauseEndInput.value = '13:00';
+            pauseEndBtn.textContent = '13:00';
             pauseToggleButtons.forEach(b => b.classList.remove('active'));
             pauseToggleButtons[0].classList.add('active');
             pauseMode = 'no';
