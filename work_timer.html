@@ -88,6 +88,67 @@
             font-family: 'Monaco', 'Courier New', monospace;
         }
         
+        .now-btn {
+            padding: 10px 16px !important;
+            background: #d4c9be !important;
+            color: #5a5450 !important;
+            border: 1px solid #d4c9be !important;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 0 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        
+        .now-btn:hover {
+            background: #c4b9ae !important;
+            border-color: #c4b9ae !important;
+        }
+        
+        .now-btn:active {
+            opacity: 0.95;
+        }
+        
+        .alarm-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #8b7355;
+            color: #faf8f5;
+            border: 1px solid #8b7355;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .alarm-btn:hover {
+            background: #6b5445;
+            border-color: #6b5445;
+        }
+        
+        .alarm-btn:active {
+            opacity: 0.95;
+        }
+        
+        .save-indicator {
+            font-size: 11px;
+            color: #a89a8a;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
         input[type="time"]:focus,
         select:focus {
             outline: none;
@@ -290,7 +351,10 @@
             <div class="section">
                 <div class="section-title">Orario di entrata</div>
                 <label for="entryTime">A che ora sei entrato?</label>
-                <input type="time" id="entryTime" value="08:30">
+                <div style="display: flex; gap: 8px;">
+                    <input type="time" id="entryTime" value="08:30" style="flex: 1;">
+                    <button type="button" class="now-btn" onclick="setNow()">Ora</button>
+                </div>
             </div>
             
             <div class="section">
@@ -319,6 +383,7 @@
                 <div class="result-card primary">
                     <div class="result-label">Uscita senza straordinario</div>
                     <div class="result-value" id="normalExit">-</div>
+                    <button type="button" class="alarm-btn" id="alarmBtn" onclick="setAlarm()">Imposta sveglia</button>
                 </div>
                 
                 <div class="result-card">
@@ -344,6 +409,8 @@
                     <div class="overtime-grid" id="overtimeGrid"></div>
                 </div>
             </div>
+            
+            <div class="save-indicator" id="saveIndicator">Dati salvati automaticamente</div>
         </div>
         
         <button id="calculateBtn" onclick="calculate()">Calcola orario di uscita</button>
@@ -357,6 +424,91 @@
         
         let pauseMode = 'no';
         
+        // Funzione per impostare l'ora attuale
+        function setNow() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('entryTime').value = `${hours}:${minutes}`;
+            calculate();
+        }
+        
+        // Funzione per impostare la sveglia
+        function setAlarm() {
+            const exitTime = document.getElementById('normalExit').textContent;
+            
+            if (exitTime === '-') {
+                alert('Per favore, calcola l\'orario di uscita prima');
+                return;
+            }
+            
+            // Prova a usare le API di allarme (se disponibili)
+            // Su iOS non è possibile aprire l'app Sveglie direttamente
+            // Su Android possiamo provare con un intent
+            
+            // Verifichiamo il tipo di dispositivo
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
+            
+            if (isIOS) {
+                // Su iOS mostriamo un'istruzione all'utente
+                alert(`Ora di uscita: ${exitTime}\n\nAper l'app Sveglie e imposta una sveglia per le ${exitTime}`);
+            } else if (isAndroid) {
+                // Su Android proviamo a usare l'intent per le sveglie
+                try {
+                    // Cerca di aprire l'app Sveglie
+                    window.location.href = `intent://set_alarm?label=Uscita%20dal%20lavoro&hour=${exitTime.split(':')[0]}&minutes=${exitTime.split(':')[1]}&skip_ui=false#Intent;package=com.android.deskclock;action=android.intent.action.SET_ALARM;end`;
+                } catch(e) {
+                    alert(`Ora di uscita: ${exitTime}\n\nApri l'app Sveglie e imposta una sveglia per le ${exitTime}`);
+                }
+            } else {
+                alert(`Ora di uscita: ${exitTime}\n\nImposta una sveglia per le ${exitTime}`);
+            }
+        }
+        
+        // Funzioni di salvataggio dati
+        function saveData() {
+            const data = {
+                entryTime: document.getElementById('entryTime').value,
+                pauseMode: pauseMode,
+                pauseStart: document.getElementById('pauseStart').value,
+                pauseEnd: document.getElementById('pauseEnd').value
+            };
+            localStorage.setItem('workTimerData', JSON.stringify(data));
+            showSaveIndicator();
+        }
+        
+        function loadData() {
+            const saved = localStorage.getItem('workTimerData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    document.getElementById('entryTime').value = data.entryTime || '08:30';
+                    document.getElementById('pauseStart').value = data.pauseStart || '12:30';
+                    document.getElementById('pauseEnd').value = data.pauseEnd || '13:00';
+                    
+                    if (data.pauseMode === 'yes') {
+                        pauseMode = 'yes';
+                        pauseToggleButtons.forEach(b => b.classList.remove('active'));
+                        pauseToggleButtons[1].classList.add('active');
+                        pauseDetailsSection.classList.remove('hidden');
+                    }
+                } catch(e) {
+                    console.log('Errore nel caricamento dei dati salvati');
+                }
+            }
+        }
+        
+        function showSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.style.opacity = '1';
+            indicator.textContent = '✓ Dati salvati';
+            setTimeout(() => {
+                indicator.textContent = 'Dati salvati automaticamente';
+                indicator.style.opacity = '0.7';
+            }, 2000);
+        }
+        
         pauseToggleButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 pauseToggleButtons.forEach(b => b.classList.remove('active'));
@@ -368,6 +520,8 @@
                 } else {
                     pauseDetailsSection.classList.add('hidden');
                 }
+                
+                saveData();
             });
         });
         
@@ -459,6 +613,7 @@
             }
             
             resultsSection.classList.remove('hidden');
+            saveData();
         }
         
         function reset() {
@@ -470,11 +625,15 @@
             pauseMode = 'no';
             pauseDetailsSection.classList.add('hidden');
             resultsSection.classList.add('hidden');
+            localStorage.removeItem('workTimerData');
         }
         
         document.getElementById('entryTime').addEventListener('change', calculate);
         document.getElementById('pauseStart').addEventListener('change', calculate);
         document.getElementById('pauseEnd').addEventListener('change', calculate);
+        
+        // Carica i dati salvati all'apertura
+        loadData();
     </script>
 </body>
 </html>
