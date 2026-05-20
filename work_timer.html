@@ -19,22 +19,71 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        body.light-mode {
             background: linear-gradient(135deg, #f5ede3 0%, #ede1d5 100%);
             color: #5a5450;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        }
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #2a2520 0%, #1f1b17 100%);
+            color: #d4c9be;
         }
         
         .container {
             width: 100vw;
             height: 100vh;
-            background: #faf8f5;
             padding: 20px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            transition: background 0.3s;
+        }
+        
+        .light-mode .container {
+            background: #faf8f5;
+        }
+        
+        .dark-mode .container {
+            background: #1a1714;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .theme-toggle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid;
+            background: transparent;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .light-mode .theme-toggle {
+            border-color: #d4c9be;
+            color: #8b7355;
+        }
+        
+        .dark-mode .theme-toggle {
+            border-color: #5a5450;
+            color: #d4c9be;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
         
         .inner {
@@ -49,9 +98,16 @@
             font-family: 'Georgia', serif;
             font-size: 32px;
             line-height: 1.2;
-            color: #8b7355;
             font-weight: 300;
             letter-spacing: 2px;
+        }
+        
+        .light-mode .header {
+            color: #8b7355;
+        }
+        
+        .dark-mode .header {
+            color: #d4c9be;
         }
         
         .section {
@@ -61,18 +117,32 @@
         .section-title {
             font-size: 10px;
             font-weight: 700;
-            color: #a89a8a;
             text-transform: uppercase;
             letter-spacing: 1.2px;
             margin-bottom: 10px;
         }
         
+        .light-mode .section-title {
+            color: #a89a8a;
+        }
+        
+        .dark-mode .section-title {
+            color: #8b7c70;
+        }
+        
         label {
             display: block;
             font-size: 14px;
-            color: #6b6360;
             margin-bottom: 8px;
             font-weight: 500;
+        }
+        
+        .light-mode label {
+            color: #6b6360;
+        }
+        
+        .dark-mode label {
+            color: #c4b9ae;
         }
         
         input[type="time"],
@@ -80,12 +150,293 @@
             width: 100%;
             padding: 10px 12px;
             font-size: 16px;
-            border: 1px solid #e0d5cb;
+            border: 1px solid;
             border-radius: 4px;
-            background: #fefdfb;
-            color: #5a5450;
             transition: all 0.2s;
             font-family: 'Monaco', 'Courier New', monospace;
+        }
+        
+        .light-mode input[type="time"],
+        .light-mode select {
+            border-color: #e0d5cb;
+            background: #fefdfb;
+            color: #5a5450;
+        }
+        
+        .dark-mode input[type="time"],
+        .dark-mode select {
+            border-color: #3f3935;
+            background: #2a2520;
+            color: #d4c9be;
+        }
+        
+        input[type="time"]:focus,
+        select:focus {
+            outline: none;
+        }
+        
+        .light-mode input[type="time"]:focus,
+        .light-mode select:focus {
+            border-color: #b8a08f;
+            background: #fffbf7;
+            box-shadow: 0 0 0 3px rgba(184, 160, 143, 0.08);
+        }
+        
+        .dark-mode input[type="time"]:focus,
+        .dark-mode select:focus {
+            border-color: #8b7355;
+            background: #3f3935;
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.2);
+        }
+        
+        .toggle-group {
+            display: flex;
+            gap: 0;
+            margin-top: 10px;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid;
+            border-radius: 4px;
+            color: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .toggle-btn:first-child {
+            margin-right: 8px;
+        }
+        
+        .light-mode .toggle-btn {
+            border-color: #e0d5cb;
+            background: #fefdfb;
+            color: #6b6360;
+        }
+        
+        .dark-mode .toggle-btn {
+            border-color: #3f3935;
+            background: #2a2520;
+            color: #c4b9ae;
+        }
+        
+        .light-mode .toggle-btn.active {
+            background: #8b7355;
+            color: #faf8f5;
+            border-color: #8b7355;
+        }
+        
+        .dark-mode .toggle-btn.active {
+            background: #d4c9be;
+            color: #1a1714;
+            border-color: #d4c9be;
+        }
+        
+        .toggle-btn:hover:not(.active) {
+            opacity: 0.7;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result-card {
+            border-radius: 4px;
+            padding: 14px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        
+        .light-mode .result-card {
+            background: #fefdfb;
+            border: 1px solid #e0d5cb;
+        }
+        
+        .dark-mode .result-card {
+            background: #2a2520;
+            border: 1px solid #3f3935;
+        }
+        
+        .result-card.primary {
+            border: 1px solid;
+        }
+        
+        .light-mode .result-card.primary {
+            background: #f5ede3;
+            border-color: #d4c9be;
+        }
+        
+        .dark-mode .result-card.primary {
+            background: #3f3935;
+            border-color: #5a5450;
+        }
+        
+        .result-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 6px;
+        }
+        
+        .light-mode .result-label {
+            color: #a89a8a;
+        }
+        
+        .dark-mode .result-label {
+            color: #8b7c70;
+        }
+        
+        .result-value {
+            font-size: 32px;
+            font-weight: 300;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+        
+        .light-mode .result-value {
+            color: #8b7355;
+        }
+        
+        .dark-mode .result-value {
+            color: #d4c9be;
+        }
+        
+        .overtime-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .overtime-item {
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid;
+        }
+        
+        .light-mode .overtime-item {
+            background: #fefdfb;
+            border-color: #e0d5cb;
+        }
+        
+        .dark-mode .overtime-item {
+            background: #1a1714;
+            border-color: #3f3935;
+        }
+        
+        .overtime-label {
+            font-size: 10px;
+            margin-bottom: 4px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .light-mode .overtime-label {
+            color: #a89a8a;
+        }
+        
+        .dark-mode .overtime-label {
+            color: #8b7c70;
+        }
+        
+        .overtime-time {
+            font-size: 18px;
+            font-weight: 500;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .light-mode .overtime-time {
+            color: #8b7355;
+        }
+        
+        .dark-mode .overtime-time {
+            color: #d4c9be;
+        }
+        
+        .info-box {
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 12px;
+            margin-top: 8px;
+            line-height: 1.5;
+            border: 1px solid;
+        }
+        
+        .info-box.warning {
+            background: #fef4e6;
+            border-color: #e6d4c3;
+            color: #8b7355;
+        }
+        
+        .dark-mode .info-box.warning {
+            background: #3f3530;
+            border-color: #5a4a3f;
+            color: #d4c9be;
+        }
+        
+        .info-box.success {
+            background: #e8f3e8;
+            border-color: #d4e0d4;
+            color: #5a6b5a;
+        }
+        
+        .dark-mode .info-box.success {
+            background: #303530;
+            border-color: #4a5a4a;
+            color: #b8d4b8;
+        }
+        
+        button {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        
+        .light-mode button {
+            background: #8b7355;
+            color: #faf8f5;
+            border-color: #8b7355;
+        }
+        
+        .dark-mode button {
+            background: #d4c9be;
+            color: #1a1714;
+            border-color: #d4c9be;
+        }
+        
+        button:hover {
+            opacity: 0.85;
+        }
+        
+        button:active {
+            opacity: 0.95;
+        }
+        
+        .reset-btn {
+            background: #e0d5cb !important;
+            color: #6b6360 !important;
+            border-color: #e0d5cb !important;
+            margin-top: 8px;
+        }
+        
+        .dark-mode .reset-btn {
+            background: #3f3935 !important;
+            color: #c4b9ae !important;
+            border-color: #3f3935 !important;
         }
         
         .now-btn {
@@ -104,220 +455,18 @@
             white-space: nowrap;
         }
         
+        .dark-mode .now-btn {
+            background: #3f3935 !important;
+            color: #c4b9ae !important;
+            border-color: #3f3935 !important;
+        }
+        
         .now-btn:hover {
-            background: #c4b9ae !important;
-            border-color: #c4b9ae !important;
+            opacity: 0.85;
         }
         
         .now-btn:active {
             opacity: 0.95;
-        }
-        
-        .alarm-btn {
-            display: inline-block;
-            padding: 6px 12px;
-            background: #8b7355;
-            color: #faf8f5;
-            border: 1px solid #8b7355;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            margin-top: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .alarm-btn:hover {
-            background: #6b5445;
-            border-color: #6b5445;
-        }
-        
-        .alarm-btn:active {
-            opacity: 0.95;
-        }
-        
-        .save-indicator {
-            font-size: 11px;
-            color: #a89a8a;
-            margin-top: 8px;
-            text-align: center;
-            font-weight: 500;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        input[type="time"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #b8a08f;
-            background: #fffbf7;
-            box-shadow: 0 0 0 3px rgba(184, 160, 143, 0.08);
-        }
-        
-        .toggle-group {
-            display: flex;
-            gap: 0;
-            margin-top: 10px;
-        }
-        
-        .toggle-btn {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #e0d5cb;
-            border-radius: 4px;
-            background: #fefdfb;
-            color: #6b6360;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .toggle-btn:first-child {
-            margin-right: 8px;
-        }
-        
-        .toggle-btn.active {
-            background: #8b7355;
-            color: #faf8f5;
-            border-color: #8b7355;
-        }
-        
-        .toggle-btn:hover:not(.active) {
-            background: #f5f1ed;
-            border-color: #d4c9be;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .result-card {
-            background: #fefdfb;
-            border: 1px solid #e0d5cb;
-            border-radius: 4px;
-            padding: 14px;
-            margin-bottom: 12px;
-        }
-        
-        .result-card.primary {
-            background: #f5ede3;
-            border-color: #d4c9be;
-        }
-        
-        .result-label {
-            font-size: 10px;
-            color: #a89a8a;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-        
-        .result-value {
-            font-size: 32px;
-            font-weight: 300;
-            color: #8b7355;
-            font-family: 'Monaco', 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
-        
-        .result-card.primary .result-value {
-            color: #8b7355;
-        }
-        
-        .overtime-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .overtime-item {
-            background: #fefdfb;
-            border: 1px solid #e0d5cb;
-            border-radius: 4px;
-            padding: 10px;
-            text-align: center;
-        }
-        
-        .overtime-label {
-            font-size: 10px;
-            color: #a89a8a;
-            margin-bottom: 4px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        
-        .overtime-time {
-            font-size: 18px;
-            font-weight: 500;
-            color: #8b7355;
-            font-family: 'Monaco', 'Courier New', monospace;
-            letter-spacing: 1px;
-        }
-        
-        .info-box {
-            background: #fef4e6;
-            border: 1px solid #e6d4c3;
-            border-radius: 4px;
-            padding: 10px 12px;
-            font-size: 12px;
-            color: #8b7355;
-            margin-top: 8px;
-            line-height: 1.5;
-        }
-        
-        .info-box.warning {
-            background: #fef4e6;
-            border-color: #e6d4c3;
-            color: #8b7355;
-        }
-        
-        .info-box.success {
-            background: #e8f3e8;
-            border-color: #d4e0d4;
-            color: #5a6b5a;
-        }
-        
-        button {
-            width: 100%;
-            padding: 11px;
-            background: #8b7355;
-            color: #faf8f5;
-            border: 1px solid #8b7355;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-        
-        button:hover {
-            background: #6b5445;
-            border-color: #6b5445;
-        }
-        
-        button:active {
-            opacity: 0.95;
-        }
-        
-        .reset-btn {
-            background: #e0d5cb;
-            color: #6b6360;
-            border-color: #e0d5cb;
-            margin-top: 8px;
-        }
-        
-        .reset-btn:hover {
-            background: #d4c9be;
-            border-color: #d4c9be;
         }
         
         .details-row {
@@ -325,7 +474,15 @@
             justify-content: space-between;
             padding: 6px 0;
             font-size: 13px;
-            border-bottom: 1px solid #ede8e1;
+            border-bottom: 1px solid;
+        }
+        
+        .light-mode .details-row {
+            border-color: #ede8e1;
+        }
+        
+        .dark-mode .details-row {
+            border-color: #3f3935;
         }
         
         .details-row:last-child {
@@ -333,18 +490,150 @@
         }
         
         .details-label {
+            font-family: inherit;
+        }
+        
+        .light-mode .details-label {
             color: #8b7c70;
+        }
+        
+        .dark-mode .details-label {
+            color: #a89a8a;
         }
         
         .details-value {
             font-weight: 600;
-            color: #5a5450;
             font-family: 'Monaco', 'Courier New', monospace;
+        }
+        
+        .light-mode .details-value {
+            color: #5a5450;
+        }
+        
+        .dark-mode .details-value {
+            color: #d4c9be;
+        }
+        
+        .save-indicator {
+            font-size: 11px;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .light-mode .save-indicator {
+            color: #a89a8a;
+        }
+        
+        .dark-mode .save-indicator {
+            color: #8b7c70;
+        }
+        
+        .history-item {
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 6px;
+            border: 1px solid;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .light-mode .history-item {
+            background: #fefdfb;
+            border-color: #e0d5cb;
+            color: #5a5450;
+        }
+        
+        .dark-mode .history-item {
+            background: #2a2520;
+            border-color: #3f3935;
+            color: #d4c9be;
+        }
+        
+        .history-date {
+            font-weight: 600;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        
+        .history-time {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        
+        .week-stats {
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid;
+            margin-bottom: 8px;
+        }
+        
+        .light-mode .week-stats {
+            background: #f5ede3;
+            border-color: #d4c9be;
+        }
+        
+        .dark-mode .week-stats {
+            background: #3f3935;
+            border-color: #5a5450;
+        }
+        
+        .week-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        
+        .light-mode .week-label {
+            color: #a89a8a;
+        }
+        
+        .dark-mode .week-label {
+            color: #8b7c70;
+        }
+        
+        .week-hours {
+            font-size: 24px;
+            font-weight: 300;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .light-mode .week-hours {
+            color: #8b7355;
+        }
+        
+        .dark-mode .week-hours {
+            color: #d4c9be;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .export-buttons button {
+            flex: 1;
+            padding: 8px !important;
+            margin: 0 !important;
+            font-size: 11px;
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
     <div class="container">
+        <div class="header-top">
+            <div style="width: 45px;"></div>
+            <button type="button" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+        
         <div class="inner">
             <div class="header">Work Timer</div>
             
@@ -372,7 +661,7 @@
                 <input type="time" id="pauseStart" value="12:30">
                 
                 <label for="pauseEnd" style="margin-top: 12px;">Rientro in ufficio</label>
-                <input type="time" id="pauseEnd" value="13:00">
+                <input type="time" id="pauseEnd" value="13:30">
             </div>
             
             <div id="resultsSection" class="section hidden">
@@ -383,15 +672,14 @@
                 <div class="result-card primary">
                     <div class="result-label">Uscita senza straordinario</div>
                     <div class="result-value" id="normalExit">-</div>
-                    <button type="button" class="alarm-btn" id="alarmBtn" onclick="setAlarm()">Imposta sveglia</button>
                 </div>
                 
                 <div class="result-card">
                     <div class="result-label">Dettagli della giornata</div>
-                    <div style="font-size: 13px; color: #6b6360; line-height: 1.8;">
+                    <div style="font-size: 13px; line-height: 1.8;">
                         <div class="details-row">
                             <span class="details-label">Ore di lavoro netto:</span>
-                            <span class="details-value">8:48</span>
+                            <span class="details-value">7:48</span>
                         </div>
                         <div class="details-row">
                             <span class="details-label">Pausa pranzo:</span>
@@ -399,7 +687,7 @@
                         </div>
                         <div class="details-row">
                             <span class="details-label">Tempo in ufficio:</span>
-                            <span class="details-value" id="officeTime">9:48</span>
+                            <span class="details-value" id="officeTime">8:48</span>
                         </div>
                     </div>
                 </div>
@@ -410,21 +698,53 @@
                 </div>
             </div>
             
-            <div class="save-indicator" id="saveIndicator">Dati salvati automaticamente</div>
+            <div id="statsSection" class="section hidden">
+                <div class="section-title">Statistiche settimana</div>
+                <div class="week-stats">
+                    <div class="week-label">Ore totali</div>
+                    <div class="week-hours" id="weekHours">-</div>
+                </div>
+            </div>
+            
+            <div id="historySection" class="section hidden">
+                <div class="section-title">Storico giornate</div>
+                <div id="historyList"></div>
+                <div class="export-buttons">
+                    <button type="button" onclick="exportCSV()" style="padding: 8px !important;">CSV</button>
+                    <button type="button" onclick="exportJSON()" style="padding: 8px !important;">JSON</button>
+                </div>
+            </div>
         </div>
         
         <button id="calculateBtn" onclick="calculate()">Calcola orario di uscita</button>
+        <button id="saveBtn" class="hidden" onclick="saveToHistory()" style="background: #6ba587 !important; border-color: #6ba587 !important;">Salva nello storico</button>
         <button class="reset-btn" onclick="reset()">Ripristina</button>
+        <button class="reset-btn" onclick="resetHistory()" style="background: #a87a6b !important; border-color: #a87a6b !important; color: #faf8f5 !important;">Cancella storico</button>
+        
+        <div class="save-indicator" id="saveIndicator">Dati salvati automaticamente</div>
     </div>
 
     <script>
         const pauseToggleButtons = document.querySelectorAll('[data-pause]');
         const pauseDetailsSection = document.getElementById('pauseDetailsSection');
         const resultsSection = document.getElementById('resultsSection');
+        const statsSection = document.getElementById('statsSection');
+        const historySection = document.getElementById('historySection');
         
         let pauseMode = 'no';
         
-        // Funzione per impostare l'ora attuale
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            updateThemeButton();
+        }
+        
+        function updateThemeButton() {
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+        
         function setNow() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -432,98 +752,6 @@
             document.getElementById('entryTime').value = `${hours}:${minutes}`;
             calculate();
         }
-        
-        // Funzione per impostare la sveglia
-        function setAlarm() {
-            const exitTime = document.getElementById('normalExit').textContent;
-            
-            if (exitTime === '-') {
-                alert('Per favore, calcola l\'orario di uscita prima');
-                return;
-            }
-            
-            // Prova a usare le API di allarme (se disponibili)
-            // Su iOS non è possibile aprire l'app Sveglie direttamente
-            // Su Android possiamo provare con un intent
-            
-            // Verifichiamo il tipo di dispositivo
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const isAndroid = /Android/.test(navigator.userAgent);
-            
-            if (isIOS) {
-                // Su iOS mostriamo un'istruzione all'utente
-                alert(`Ora di uscita: ${exitTime}\n\nAper l'app Sveglie e imposta una sveglia per le ${exitTime}`);
-            } else if (isAndroid) {
-                // Su Android proviamo a usare l'intent per le sveglie
-                try {
-                    // Cerca di aprire l'app Sveglie
-                    window.location.href = `intent://set_alarm?label=Uscita%20dal%20lavoro&hour=${exitTime.split(':')[0]}&minutes=${exitTime.split(':')[1]}&skip_ui=false#Intent;package=com.android.deskclock;action=android.intent.action.SET_ALARM;end`;
-                } catch(e) {
-                    alert(`Ora di uscita: ${exitTime}\n\nApri l'app Sveglie e imposta una sveglia per le ${exitTime}`);
-                }
-            } else {
-                alert(`Ora di uscita: ${exitTime}\n\nImposta una sveglia per le ${exitTime}`);
-            }
-        }
-        
-        // Funzioni di salvataggio dati
-        function saveData() {
-            const data = {
-                entryTime: document.getElementById('entryTime').value,
-                pauseMode: pauseMode,
-                pauseStart: document.getElementById('pauseStart').value,
-                pauseEnd: document.getElementById('pauseEnd').value
-            };
-            localStorage.setItem('workTimerData', JSON.stringify(data));
-            showSaveIndicator();
-        }
-        
-        function loadData() {
-            const saved = localStorage.getItem('workTimerData');
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    document.getElementById('entryTime').value = data.entryTime || '08:30';
-                    document.getElementById('pauseStart').value = data.pauseStart || '12:30';
-                    document.getElementById('pauseEnd').value = data.pauseEnd || '13:00';
-                    
-                    if (data.pauseMode === 'yes') {
-                        pauseMode = 'yes';
-                        pauseToggleButtons.forEach(b => b.classList.remove('active'));
-                        pauseToggleButtons[1].classList.add('active');
-                        pauseDetailsSection.classList.remove('hidden');
-                    }
-                } catch(e) {
-                    console.log('Errore nel caricamento dei dati salvati');
-                }
-            }
-        }
-        
-        function showSaveIndicator() {
-            const indicator = document.getElementById('saveIndicator');
-            indicator.style.opacity = '1';
-            indicator.textContent = '✓ Dati salvati';
-            setTimeout(() => {
-                indicator.textContent = 'Dati salvati automaticamente';
-                indicator.style.opacity = '0.7';
-            }, 2000);
-        }
-        
-        pauseToggleButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                pauseToggleButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                pauseMode = this.dataset.pause;
-                
-                if (pauseMode === 'yes') {
-                    pauseDetailsSection.classList.remove('hidden');
-                } else {
-                    pauseDetailsSection.classList.add('hidden');
-                }
-                
-                saveData();
-            });
-        });
         
         function timeToMinutes(timeStr) {
             if (!timeStr) return 0;
@@ -545,8 +773,17 @@
                 return;
             }
             
+            // Validazione orario entrata
             const entryMinutes = timeToMinutes(entryStr);
-            const baseWorkMinutes = 8 * 60 + 48;
+            const minTime = timeToMinutes('08:00');
+            const maxTime = timeToMinutes('10:00');
+            
+            if (entryMinutes < minTime || entryMinutes > maxTime) {
+                alert('⚠️ Orario non valido\n\nL\'entrata deve essere tra le 08:00 e le 10:00.');
+                return;
+            }
+            
+            const baseWorkMinutes = 7 * 60 + 48;  // 468 minuti = 7:48
             let pauseMinutes = 60;
             let pauseInfoMsg = '';
             let extraMinutes = 0;
@@ -578,7 +815,7 @@
                 }
             }
             
-            let exitMinutesWithoutOvertime = entryMinutes + baseWorkMinutes + extraMinutes;
+            let exitMinutesWithoutOvertime = entryMinutes + baseWorkMinutes + pauseMinutes;
             
             let normalExitMinutes = exitMinutesWithoutOvertime;
             if (normalExitMinutes >= 24 * 60) {
@@ -613,13 +850,196 @@
             }
             
             resultsSection.classList.remove('hidden');
+            
+            // Salva il dato temporaneo per il salvataggio manuale
+            window.currentCalculation = {
+                entry: entryStr,
+                exit: minutesToTime(normalExitMinutes),
+                pause: pauseMode === 'yes' ? `${document.getElementById('pauseStart').value} - ${document.getElementById('pauseEnd').value}` : 'Standard',
+                workMinutes: baseWorkMinutes + extraMinutes
+            };
+            
+            // Mostra il pulsante Salva
+            document.getElementById('saveBtn').classList.remove('hidden');
+            
             saveData();
         }
+        
+        function saveToHistory() {
+            if (!window.currentCalculation) {
+                alert('Per favore, calcola l\'orario prima di salvare');
+                return;
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            let history = JSON.parse(localStorage.getItem('workHistory') || '{}');
+            
+            history[today] = window.currentCalculation;
+            localStorage.setItem('workHistory', JSON.stringify(history));
+            
+            updateHistory();
+            updateWeekStats();
+            
+            // Feedback visivo
+            const indicator = document.getElementById('saveIndicator');
+            indicator.style.opacity = '1';
+            indicator.textContent = '✓ Salvato nello storico';
+            setTimeout(() => {
+                indicator.textContent = 'Dati salvati automaticamente';
+                indicator.style.opacity = '0.7';
+            }, 2000);
+        }
+        
+        function resetHistory() {
+            if (confirm('Sei sicuro? Questo cancellera completamente lo storico delle giornate.')) {
+                localStorage.removeItem('workHistory');
+                updateHistory();
+                updateWeekStats();
+                alert('✓ Storico cancellato');
+            }
+        }
+        
+        function updateHistory() {
+            let history = JSON.parse(localStorage.getItem('workHistory') || '{}');
+            const historyList = document.getElementById('historyList');
+            const dates = Object.keys(history).sort().reverse();
+            
+            if (dates.length === 0) {
+                historySection.classList.add('hidden');
+                return;
+            }
+            
+            historySection.classList.remove('hidden');
+            historyList.innerHTML = '';
+            
+            dates.slice(0, 7).forEach(date => {
+                const data = history[date];
+                const dateObj = new Date(date + 'T00:00');
+                const dayName = dateObj.toLocaleDateString('it-IT', { weekday: 'short' });
+                const dayNum = dateObj.toLocaleDateString('it-IT', { day: '2-digit' });
+                
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <div>
+                        <div class="history-date">${dayName} ${dayNum}</div>
+                        <div class="history-time">${data.entry} → ${data.exit}</div>
+                    </div>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+        
+        function updateWeekStats() {
+            let history = JSON.parse(localStorage.getItem('workHistory') || '{}');
+            const today = new Date();
+            const monday = new Date(today);
+            monday.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
+            
+            let weekMinutes = 0;
+            for (let i = 0; i < 5; i++) {
+                const dateStr = new Date(monday.getTime() + i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                if (history[dateStr]) {
+                    weekMinutes += history[dateStr].workMinutes || 0;
+                }
+            }
+            
+            if (weekMinutes > 0) {
+                statsSection.classList.remove('hidden');
+                document.getElementById('weekHours').textContent = minutesToTime(weekMinutes);
+            }
+        }
+        
+        function exportCSV() {
+            let history = JSON.parse(localStorage.getItem('workHistory') || '{}');
+            let csv = 'Data,Entrata,Uscita,Pausa\n';
+            
+            Object.keys(history).sort().forEach(date => {
+                const data = history[date];
+                csv += `${date},${data.entry},${data.exit},"${data.pause}"\n`;
+            });
+            
+            downloadFile(csv, 'work-timer.csv', 'text/csv');
+        }
+        
+        function exportJSON() {
+            let history = JSON.parse(localStorage.getItem('workHistory') || '{}');
+            const json = JSON.stringify(history, null, 2);
+            downloadFile(json, 'work-timer.json', 'application/json');
+        }
+        
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+        
+        function saveData() {
+            const data = {
+                entryTime: document.getElementById('entryTime').value,
+                pauseMode: pauseMode,
+                pauseStart: document.getElementById('pauseStart').value,
+                pauseEnd: document.getElementById('pauseEnd').value
+            };
+            localStorage.setItem('workTimerData', JSON.stringify(data));
+            showSaveIndicator();
+        }
+        
+        function loadData() {
+            const saved = localStorage.getItem('workTimerData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    document.getElementById('entryTime').value = data.entryTime || '08:30';
+                    document.getElementById('pauseStart').value = data.pauseStart || '12:30';
+                    document.getElementById('pauseEnd').value = data.pauseEnd || '13:30';
+                    
+                    if (data.pauseMode === 'yes') {
+                        pauseMode = 'yes';
+                        pauseToggleButtons.forEach(b => b.classList.remove('active'));
+                        pauseToggleButtons[1].classList.add('active');
+                        pauseDetailsSection.classList.remove('hidden');
+                    }
+                } catch(e) {
+                    console.log('Errore nel caricamento');
+                }
+            }
+            
+            updateHistory();
+            updateWeekStats();
+        }
+        
+        function showSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.style.opacity = '0';
+        }
+        
+        pauseToggleButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                pauseToggleButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                pauseMode = this.dataset.pause;
+                
+                if (pauseMode === 'yes') {
+                    pauseDetailsSection.classList.remove('hidden');
+                } else {
+                    pauseDetailsSection.classList.add('hidden');
+                }
+                
+                saveData();
+            });
+        });
         
         function reset() {
             document.getElementById('entryTime').value = '08:30';
             document.getElementById('pauseStart').value = '12:30';
-            document.getElementById('pauseEnd').value = '13:00';
+            document.getElementById('pauseEnd').value = '13:30';
             pauseToggleButtons.forEach(b => b.classList.remove('active'));
             pauseToggleButtons[0].classList.add('active');
             pauseMode = 'no';
@@ -632,7 +1052,15 @@
         document.getElementById('pauseStart').addEventListener('change', calculate);
         document.getElementById('pauseEnd').addEventListener('change', calculate);
         
-        // Carica i dati salvati all'apertura
+        // Carica tema salvato
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.body.classList.remove('light-mode');
+            document.body.classList.add('dark-mode');
+        }
+        updateThemeButton();
+        
+        // Carica dati
         loadData();
     </script>
 </body>
